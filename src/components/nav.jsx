@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.jpg";
-import Login from "../Pages/Login/login";
+import Modal from "../Pages/Login/login";
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -12,11 +12,13 @@ const Navbar = () => {
 
   const links = (
     <>
-      <NavLink to={"/"}>Home</NavLink>
-      <NavLink to={"/membership"}>Membership</NavLink>
-      <button className="btn" onClick={toggleModal}>
-        Join Us
-      </button>
+      <NavLink to={"/"} className="btn btn-ghost">
+        Home
+      </NavLink>
+      <NavLink to={"/membership"} className="btn btn-ghost">
+        Membership
+      </NavLink>
+
     </>
   );
 
@@ -24,7 +26,11 @@ const Navbar = () => {
     <div className="navbar bg-gradient-to-r from-[#4B5945] to-[#FFB200] mt-1">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <button
+            tabIndex={0}
+            className="btn btn-ghost lg:hidden"
+            role="button"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -39,26 +45,23 @@ const Navbar = () => {
                 d="M4 6h16M4 12h8m-8 6h16"
               />
             </svg>
-          </div>
+          </button>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
           >
             {links}
           </ul>
         </div>
-        <div className="flex">
-          <img src={logo} alt="" className="w-14 h-16 -mt-2 ml-5" />
-          <a className="btn btn-ghost text-lg -ml-4">ChatChirp</a>
+        <div className="flex items-center">
+          <img src={logo} alt="Logo" className="w-14 h-16 -mt-2 ml-5" />
+          <span className="btn btn-ghost text-lg -ml-4">ChatChirp</span>
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal gap-5 text-lg">
-          {links}
-        </ul>
+        <ul className="menu menu-horizontal gap-5 text-lg">{links}</ul>
       </div>
-      {/* Render Login Modal */}
-      <Login isModalOpen={isModalOpen} toggleModal={toggleModal} />
+      <Modal isModalOpen={isModalOpen} toggleModal={toggleModal} />
       <div className="navbar-end">
         <div className="form-control">
           <input
@@ -86,18 +89,22 @@ const Navbar = () => {
             <span className="badge badge-xs badge-primary indicator-item"></span>
           </div>
         </button>
+        {/* 
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+          <button
+            tabIndex={0}
+            className="btn btn-ghost btn-circle avatar"
+          >
             <div className="w-10 rounded-full">
               <img
-                alt="Tailwind CSS Navbar component"
+                alt="Avatar"
                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
               />
             </div>
-          </div>
+          </button>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
           >
             <li>
               <a className="justify-between">
@@ -112,7 +119,10 @@ const Navbar = () => {
               <a>Logout</a>
             </li>
           </ul>
-        </div>
+        </div> */}
+        <button className="btn bg-gradient-to-r from-[#e02e16] to-[#825cda] mt-1 rounded-full text-white font-bold " onClick={toggleModal}>
+          Join Us
+        </button>
       </div>
     </div>
   );
