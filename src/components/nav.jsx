@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 import Modal from "../Pages/Login/login";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const { user, logOut } = useContext(AuthContext)
 
+  const handleLogOut = () => {
+    logOut()
+      .then(() => { })
+      .catch(error => console.log(error))
+  }
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
@@ -89,40 +96,47 @@ const Navbar = () => {
             <span className="badge badge-xs badge-primary indicator-item"></span>
           </div>
         </button>
-        {/* 
-        <div className="dropdown dropdown-end">
-          <button
-            tabIndex={0}
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Avatar"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            </div>
-          </button>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
-        </div> */}
-        <button className="btn bg-gradient-to-r from-[#e02e16] to-[#825cda] mt-1 rounded-full text-white font-bold " onClick={toggleModal}>
-          Join Us
-        </button>
+        {/* Toggle between user profile and login button */}
+        {
+          user ?
+            <>
+              <div className="dropdown dropdown-end">
+                <button
+                  tabIndex={0}
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Avatar"
+                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    />
+                  </div>
+                </button>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+                >
+                  <li>
+                    <a className="justify-between">
+                      Profile
+                      <span className="badge">New</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a>Settings</a>
+                  </li>
+                  <li>
+                    <button onClick={handleLogOut}>Logout</button>
+                  </li>
+                </ul>
+              </div>
+            </> :
+            <>
+              <button className="btn bg-gradient-to-r from-[#e02e16] to-[#825cda] mt-1 rounded-full text-white font-bold " onClick={toggleModal}>
+                Join Us
+              </button>
+            </>
+        }
       </div>
     </div>
   );

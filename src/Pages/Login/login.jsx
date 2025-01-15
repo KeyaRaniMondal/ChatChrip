@@ -5,13 +5,11 @@ import { RxCross1 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Modal = ({ isModalOpen, toggleModal }) => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, createUser } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
 
-  const {createUser}=useContext(AuthContext)
   const toggleForm = () => setIsLogin(!isLogin);
 
-  // Formik for form handling
   const {
     values,
     errors,
@@ -46,22 +44,26 @@ const Modal = ({ isModalOpen, toggleModal }) => {
     },
     onSubmit: (values) => {
       if (isLogin) {
-        // Handle Login
+        // Login
         signIn(values.email, values.password)
           .then((result) => {
             console.log("Logged in user:", result.user);
+            toggleModal();
           })
           .catch((error) => {
             console.error("Login error:", error);
           });
       } else {
-        // Handle Registration
-        console.log("Registering user with:", values);
-        createUser(values.email,values.password)
-        .then(result=>{
-          const loggedUser=result.user;
-          console.log(loggedUser)
-        })
+        // Registration
+        createUser(values.email, values.password)
+          .then((result) => {
+            // const loggedUser=result.user;
+            console.log("Registered user:", result.user);
+            toggleModal();
+          })
+          .catch((error) => {
+            console.error("Registration error:", error);
+          });
       }
     },
   });
@@ -136,14 +138,12 @@ const Modal = ({ isModalOpen, toggleModal }) => {
               <div className="text-red-500 text-sm">{errors.password}</div>
             )}
           </div>
-          {/* button for email-password */}
           <div className="form-control mt-6">
             <button type="submit" className="btn btn-primary w-full rounded-full">
               {isLogin ? "Sign in" : "Sign up"}
             </button>
           </div>
         </form>
-        {/*button for Google Sign-In */}
         <button
           className="btn w-full rounded-full mt-3 flex items-center justify-center"
           onClick={() => console.log("Google Sign-In placeholder")}
@@ -153,10 +153,7 @@ const Modal = ({ isModalOpen, toggleModal }) => {
         </button>
         <p className="text-center mt-4">
           {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <button
-            className="text-blue-500 underline"
-            onClick={toggleForm}
-          >
+          <button className="text-blue-500 underline" onClick={toggleForm}>
             {isLogin ? "Sign up" : "Sign in"}
           </button>
         </p>
@@ -166,4 +163,3 @@ const Modal = ({ isModalOpen, toggleModal }) => {
 };
 
 export default Modal;
-
