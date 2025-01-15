@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 import Modal from "../Pages/Login/login";
 import { AuthContext } from "../Providers/AuthProvider";
@@ -25,6 +25,7 @@ const Navbar = () => {
       <NavLink to={"/membership"} className="btn btn-ghost">
         Membership
       </NavLink>
+
 
     </>
   );
@@ -70,13 +71,7 @@ const Navbar = () => {
       </div>
       <Modal isModalOpen={isModalOpen} toggleModal={toggleModal} />
       <div className="navbar-end">
-        <div className="form-control">
-          <input
-            type="text"
-            placeholder="Search"
-            className="input input-bordered w-24 md:w-auto"
-          />
-        </div>
+       
         <button className="btn btn-ghost btn-circle">
           <div className="indicator">
             <svg
@@ -123,7 +118,7 @@ const Navbar = () => {
                     </a>
                   </li>
                   <li>
-                    <a>Dashboard</a>
+                    <Link to={'dashboard'}>Dashboard</Link>
                   </li>
                   <li>
                     <button onClick={handleLogOut}>Logout</button>

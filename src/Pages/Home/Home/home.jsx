@@ -1,9 +1,10 @@
 import Navbar from "../../../components/nav"
+import Banner from "../Banner/banner"
 
 const Home = () => {
     return (
         <div>
-            This is home
+            <Banner></Banner>
         </div>
     )
 }
