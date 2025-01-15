@@ -3,9 +3,12 @@ import { useFormik } from "formik";
 import { FcGoogle } from "react-icons/fc";
 import { RxCross1 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAxiosPublic from "../../shared/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const Modal = ({ isModalOpen, toggleModal }) => {
-  const { signIn, createUser } = useContext(AuthContext);
+  const axiosPublic=useAxiosPublic()
+  const { signIn, createUser,updateUserProfile } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
 
   const toggleForm = () => setIsLogin(!isLogin);
@@ -48,6 +51,15 @@ const Modal = ({ isModalOpen, toggleModal }) => {
         signIn(values.email, values.password)
           .then((result) => {
             console.log("Logged in user:", result.user);
+            Swal.fire({
+              title: 'User Login Successful.',
+              showClass: {
+                  popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                  popup: 'animate__animated animate__fadeOutUp'
+              }
+          });
             toggleModal();
           })
           .catch((error) => {
@@ -59,7 +71,31 @@ const Modal = ({ isModalOpen, toggleModal }) => {
           .then((result) => {
             // const loggedUser=result.user;
             console.log("Registered user:", result.user);
-            toggleModal();
+            updateUserProfile(values.username)
+            .then(()=>{
+              console.log('profile updated')
+              const userInfo={
+                username:values.username,
+                email:values.email
+              }
+              axiosPublic.post('/users',userInfo)
+              .then(res=>{ 
+                if(res.data.insertedId)
+                {
+                  console.log('user added to database')
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'User created successfully.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                  toggleModal();
+                }
+            })
+           
+            })
+
           })
           .catch((error) => {
             console.error("Registration error:", error);
