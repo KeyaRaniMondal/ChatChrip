@@ -6,9 +6,13 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import useAxiosPublic from "../../shared/useAxiosPublic";
 import Swal from "sweetalert2";
 
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
 const Modal = ({ isModalOpen, toggleModal }) => {
-  const axiosPublic=useAxiosPublic()
-  const { signIn, createUser,updateUserProfile } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic()
+  const { signIn, createUser, updateUserProfile } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
 
   const toggleForm = () => setIsLogin(!isLogin);
@@ -19,12 +23,14 @@ const Modal = ({ isModalOpen, toggleModal }) => {
     touched,
     handleBlur,
     handleChange,
+    setFieldValue,
     handleSubmit,
   } = useFormik({
     initialValues: {
       email: "",
       password: "",
       username: "",
+      image: null,
     },
     validate: (values) => {
       const errors = {};
@@ -45,64 +51,65 @@ const Modal = ({ isModalOpen, toggleModal }) => {
       }
       return errors;
     },
-    onSubmit: (values) => {
-      if (isLogin) {
-        // Login
-        signIn(values.email, values.password)
-          .then((result) => {
-            console.log("Logged in user:", result.user);
-            Swal.fire({
-              title: 'User Login Successful.',
-              showClass: {
-                  popup: 'animate__animated animate__fadeInDown'
-              },
-              hideClass: {
-                  popup: 'animate__animated animate__fadeOutUp'
-              }
-          });
-            toggleModal();
-          })
-          .catch((error) => {
-            console.error("Login error:", error);
-          });
-      } else {
-        // Registration
-        createUser(values.email, values.password)
-          .then((result) => {
-            // const loggedUser=result.user;
-            console.log("Registered user:", result.user);
-            updateUserProfile(values.username)
-            .then(()=>{
-              console.log('profile updated')
-              const userInfo={
-                username:values.username,
-                email:values.email
-              }
-              axiosPublic.post('/users',userInfo)
-              .then(res=>{ 
-                if(res.data.insertedId)
-                {
-                  console.log('user added to database')
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'User created successfully.',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                  toggleModal();
-                }
-            })
-           
-            })
+    onSubmit: async (values) => {
+      try {
+        let imageUrl = null;
+        if (!isLogin && values.image) {
+          const formData = new FormData();
+          formData.append("image", values.image);
 
-          })
-          .catch((error) => {
-            console.error("Registration error:", error);
+          const response = await axiosPublic.post(image_hosting_api, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           });
+
+          if (response.data.success) {
+            imageUrl = response.data.data.display_url;
+          }
+        }
+
+        if (isLogin) {
+          // Login Logic
+          const user = await signIn(values.email, values.password);
+          Swal.fire({
+            title: "Login successful!",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+          toggleModal();
+        } else {
+          // Registration Logic
+          const user = await createUser(values.email, values.password);
+          await updateUserProfile(values.username, imageUrl);
+
+          // Add user to database
+          await axiosPublic.post("/users", {
+            username: values.username,
+            email: values.email,
+            image: imageUrl,
+          });
+
+          Swal.fire({
+            title: "Registration successful!",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+          toggleModal();
+        }
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          title: "Error",
+          text: "Something went wrong. Please try again.",
+          icon: "error",
+        });
       }
     },
   });
+
 
   if (!isModalOpen) return null;
 
@@ -157,6 +164,7 @@ const Modal = ({ isModalOpen, toggleModal }) => {
               <div className="text-red-500 text-sm">{errors.email}</div>
             )}
           </div>
+
           <div className="form-control mb-4">
             <label className="label">
               <span className="label-text">Password</span>
@@ -174,6 +182,26 @@ const Modal = ({ isModalOpen, toggleModal }) => {
               <div className="text-red-500 text-sm">{errors.password}</div>
             )}
           </div>
+          {!isLogin && (
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Profile Image</span>
+              </label>
+              <input
+                type="file"
+                name="image"
+                className="file-input file-input-bordered file-input-warning w-full max-w-xs"
+                onChange={(event) => {
+                  setFieldValue("image", event.currentTarget.files[0]);
+                }}
+              />
+              {errors.image && touched.image && (
+                <div className="text-red-500 text-sm">{errors.image}</div>
+              )}
+            </div>
+          )}
+
+
           <div className="form-control mt-6">
             <button type="submit" className="btn btn-primary w-full rounded-full">
               {isLogin ? "Sign in" : "Sign up"}

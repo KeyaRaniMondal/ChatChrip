@@ -10,6 +10,7 @@ import PrivateRoute from "./privateRoute";
 import AddPost from "../Dashboard/Post/AddPost";
 import Profile from "../Dashboard/Profile/profile";
 import CreatePost from "../Dashboard/Post/createPost";
+import MyPost from "../Dashboard/Post/myPost";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile></Profile>
+      },
+      {
+        path: 'myPost',
+        element: <MyPost></MyPost>
       },
     ],
   },
