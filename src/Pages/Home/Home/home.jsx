@@ -1,10 +1,11 @@
-import Navbar from "../../../components/nav"
+import FeaturedCard from "../../../components/featuredPosts/featuredPost"
 import Banner from "../Banner/banner"
 
 const Home = () => {
     return (
         <div>
             <Banner></Banner>
+            <FeaturedCard></FeaturedCard>
         </div>
     )
 }

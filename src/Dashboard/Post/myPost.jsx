@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import useAxiosSecure from "../../shared/useAxiosSecure";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { FaCommentAlt } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 const MyPost = () => {
   const [posts, setPosts] = useState([]);
@@ -34,7 +36,7 @@ const MyPost = () => {
             <th>Delete Button</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="list-none">
           {posts.length === 0 ? (
             <p>No posts available.</p>
           ) : (
@@ -47,6 +49,16 @@ const MyPost = () => {
               <td>
                 {posts.map((post) => (
                   <li key={post._id}>{post.votes}</li>
+                ))}
+              </td>
+              <td>
+                {posts.map((post) => (
+                  <li key={post._id}><FaCommentAlt/></li>
+                ))}
+              </td>
+              <td>
+                {posts.map((post) => (
+                  <li key={post._id}><MdDeleteForever/></li>
                 ))}
               </td>
             </tr>
