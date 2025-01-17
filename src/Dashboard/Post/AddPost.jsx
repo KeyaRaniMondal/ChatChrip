@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPublic from "../../shared/useAxiosPublic";
 import useAxiosSecure from "../../shared/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -18,7 +19,8 @@ const options = [
 ];
 
 const AddPost = () => {
-  const { register, handleSubmit } = useForm();
+  const {user}=useContext(AuthContext)
+  const { register, handleSubmit, setValue } = useForm();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const [selectedTags, setSelectedTags] = useState([]); 
@@ -27,9 +29,14 @@ const AddPost = () => {
     setSelectedTags(selectedOptions || []); 
   };
 
+  useEffect(() => {
+    if (user) {
+      setValue("authorname", user.username || ""); 
+      setValue("authoremail", user.email || ""); 
+    }
+  }, [user, setValue]);
   const onSubmit = async (data) => {
     console.log("Form Data:", data);
-
 
     const tags = selectedTags.map((tag) => tag.value);
     console.log("Selected Tags:", tags);
@@ -47,7 +54,7 @@ const AddPost = () => {
         image: res.data.data.display_url,
         authoremail: data.authoremail,
         posttitle: data.posttitle,
-        tags, 
+        tags,
       };
       const postRes=await axiosSecure.post('/posts',addPost)
       console.log("Post Data:",postRes.data);
