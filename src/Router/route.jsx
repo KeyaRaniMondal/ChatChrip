@@ -11,6 +11,7 @@ import AddPost from "../Dashboard/Post/AddPost";
 import Profile from "../Dashboard/Profile/profile";
 import CreatePost from "../Dashboard/Post/createPost";
 import MyPost from "../Dashboard/Post/myPost";
+import PostDetails from "../Pages/PostDetails/postDetails";
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +26,11 @@ export const router = createBrowserRouter([
         path: 'postCreation',
         element: <CreatePost></CreatePost>,
       },
-
+      {
+        path: 'postDetail/:id',
+        element: <PostDetails></PostDetails>,
+        loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`)
+      },
     ],
   },
   {
@@ -44,6 +49,7 @@ export const router = createBrowserRouter([
         path: 'myPost',
         element: <MyPost></MyPost>
       },
+      
     ],
   },
 ]);
