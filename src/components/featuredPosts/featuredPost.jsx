@@ -69,7 +69,7 @@ const FeaturedCard = () => {
               className="bg-[#b8b884]"
               avatar={
                 <Avatar sx={{ bgcolor: red }} aria-label="recipe">
-                  {post?.image}
+                  {post.authoremail.charAt(0).toUpperCase()} 
                 </Avatar>
               }
               title={post.posttitle}

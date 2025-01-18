@@ -31,8 +31,9 @@ const AddPost = () => {
 
   useEffect(() => {
     if (user) {
-      setValue("authorname", user.username || ""); 
+      setValue("authorname", user.username || "");  
       setValue("authoremail", user.email || ""); 
+      setValue("authorImage", user.photoURL || ""); 
     }
   }, [user, setValue]);
   const onSubmit = async (data) => {
@@ -50,6 +51,7 @@ const AddPost = () => {
     if (res.data.success) {
       const addPost = {
         authorname: data.authorname,
+        authorImage: data.authorImage,
         postdescription: data.postdescription,
         image: res.data.data.display_url,
         authoremail: data.authoremail,
