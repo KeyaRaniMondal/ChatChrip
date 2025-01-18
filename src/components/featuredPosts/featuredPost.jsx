@@ -61,12 +61,12 @@ const FeaturedCard = () => {
   };
 
   return (
-    <div className="posts-container mt-10">
+    <div className="posts-container mt-10 ">
       {posts.map((post) => (
         <Link key={post._id} to={`/postDetail/${post._id}`}>
           <Card sx={{ maxWidth: 700 }} className="ml-40 mb-5">
             <CardHeader
-              className="bg-[#b8b884]"
+              className="bg-[#1D1616] text-white"
               avatar={
                 <Avatar sx={{ bgcolor: red }} aria-label="recipe">
                   {post.authoremail.charAt(0).toUpperCase()} 
@@ -81,12 +81,12 @@ const FeaturedCard = () => {
               image={post.image}
               alt={post.posttitle}
             />
-            <CardContent className="bg-[#b8b884]">
+            <CardContent className="">
               <div className="my-2">
                 {post.tags.map((tag, index) => (
                   <button
                     key={index}
-                    className="bg-slate-400 text-white rounded-full px-4 py-2 m-1"
+                    className="bg-black text-white rounded-full px-4 py-2 m-1"
                   >
                     {tag}
                   </button>
@@ -97,7 +97,7 @@ const FeaturedCard = () => {
                 {post.postdescription}
               </Typography>
             </CardContent>
-            <CardActions disableSpacing className="bg-[#b8b884]">
+            <CardActions disableSpacing className="bg-[#eee8e8]">
               <IconButton aria-label="upvote">
                 <BiSolidUpvote className="text-[#257425] hover:'upvote'" />
               </IconButton>

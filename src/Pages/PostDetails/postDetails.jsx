@@ -5,10 +5,11 @@ import Avatar from '@mui/material/Avatar';
 import { CardActions, CardContent } from '@mui/material';
 import { red } from '@mui/material/colors';
 import VoteSystem from "./voteSystem";
-// import CommentSection from './CommentSection';
+import Comment from './comment';
+
 
 const PostDetails = () => {
-
+    const [comments, setComments] = useState([]);
   const post = useLoaderData();
   const { _id, authorname, authorImage, postdescription, image, authoremail, posttitle, tags, upvote, downvote } = post;
 
@@ -34,7 +35,7 @@ const PostDetails = () => {
       <CardActions disableSpacing>
         <VoteSystem postId={_id} upvote={upvote} downvote={downvote} />
       </CardActions>
-      {/* <CommentSection postId={_id} /> */}
+      <Comment postId={_id} />
     </div>
   );
 };

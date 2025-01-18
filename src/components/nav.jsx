@@ -25,6 +25,9 @@ const Navbar = () => {
       <NavLink to={"/membership"} className="btn btn-ghost">
         Membership
       </NavLink>
+      <NavLink to={"/announce"} className="btn btn-ghost">
+       Announcement
+      </NavLink>
 
 
     </>

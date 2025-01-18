@@ -5,6 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { AuthContext } from "../../Providers/AuthProvider";
 import useAxiosPublic from "../../shared/useAxiosPublic";
 import Swal from "sweetalert2";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -12,10 +13,47 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const Modal = ({ isModalOpen, toggleModal }) => {
   const axiosPublic = useAxiosPublic()
-  const { signIn, createUser, updateUserProfile } = useContext(AuthContext);
+  const {setUser,signIn, createUser, updateUserProfile } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
-
+  const provider = new GoogleAuthProvider();
   const toggleForm = () => setIsLogin(!isLogin);
+
+   // Google Sign-In Handler
+const handleGoogleSignIn = async () => {
+  const auth = getAuth(); 
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    setUser(user);
+    // const response = await axiosPublic.get(`/users/${user.uid}`);
+    // if (!response.data) {
+      await axiosPublic.post("/users", {
+        username: user.displayName || "Default Username",  
+        email: user.email,
+        image: user.photoURL,  
+      });
+    // }
+
+    Swal.fire({
+      title: "Success",
+      text: "Google Sign-In successful!",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+
+    toggleModal();
+  } catch (error) {
+    console.error("Google Sign-In Error: ", error.message);
+    Swal.fire({
+      title: "Error",
+      text: error.message || "Something went wrong. Please try again.",
+      icon: "error",
+    });
+    toggleModal();
+  }
+};
+
 
   const {
     values,
@@ -210,11 +248,12 @@ const Modal = ({ isModalOpen, toggleModal }) => {
         </form>
         <button
           className="btn w-full rounded-full mt-3 flex items-center justify-center"
-          onClick={() => console.log("Google Sign-In placeholder")}
+          onClick={handleGoogleSignIn}
         >
           <FcGoogle className="w-8 h-8 mr-2" />
           Continue with Google
         </button>
+        {errors.google && <p className="text-red-500 text-sm mt-2">{errors.google}</p>}
         <p className="text-center mt-4">
           {isLogin ? "Don't have an account? " : "Already have an account? "}
           <button className="text-blue-500 underline" onClick={toggleForm}>

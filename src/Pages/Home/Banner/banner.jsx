@@ -1,11 +1,13 @@
+import { useState } from 'react'
 import banner1 from '../../../assets/banner.jpg'
 
 const Banner=()=>{
+  const [searcch,setSearch]=useState("")
     return(
 <div 
      style={{ 
          backgroundImage:`url(${banner1})`,
-         width: '100vw', // Or width: '100%' 
+         width: '100vw',  
         height:'28vw'
      }}>
 
