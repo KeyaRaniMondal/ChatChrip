@@ -1,8 +1,7 @@
 const Tags=()=>{
     return(
-        <div className="mt-10">
+        <div className="mt-28 ">
 <ul className="steps steps-vertical">
-<button className='btn bg-black text-white'>Sort by Popularity</button>
   <li className="btn bg-black text-white ">All Posts</li>
   <li className="btn bg-black text-white ">Programming</li>
   <li className="btn bg-black text-white">Languages</li>

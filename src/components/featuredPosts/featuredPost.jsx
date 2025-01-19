@@ -15,6 +15,7 @@ import { red } from "@mui/material/colors";
 import { BiDownvote, BiSolidUpvote } from "react-icons/bi";
 import { FaCommentDots } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { IoSparkles } from "react-icons/io5";
 
 const FeaturedCard = ({ search }) => {
   const [posts, setPosts] = useState([]);
@@ -62,17 +63,17 @@ const FeaturedCard = ({ search }) => {
       <div className="controls mb-5 flex justify-between px-40">
         <button
           onClick={toggleSortByPopularity}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className=" bg-gradient-to-r from-[#726f24] to-blue-500 hover:from-pink-500 hover:to-orange-500  text-white px-4 py-2 rounded-full -ml-[450px] "
         >
-          {sortByPopularity ? "Sort by Newest" : "Sort by Popularity"}
+         <IoSparkles className="w-40 "/> {sortByPopularity ? " Sort by Newest": "Sort by Popularity"}
         </button>
       </div>
 
       {paginatedPosts.map((post) => (
         <Link key={post._id} to={`/postDetail/${post._id}`}>
-          <Card sx={{ maxWidth: 700 }} className="ml-40 mb-5">
+          <Card sx={{ maxWidth: 700 }} className="ml-40 mb-5 ">
             <CardHeader
-              // className="bg-[#1D1616] text-white"
+              
               avatar={
                 <Avatar sx={{ bgcolor: red }} aria-label="recipe">
                   {post.authoremail.charAt(0).toUpperCase()}
@@ -116,7 +117,7 @@ const FeaturedCard = ({ search }) => {
               </Typography>
             </CardContent>
 
-            <CardActions disableSpacing className="bg-[#eee8e8]">
+            <CardActions disableSpacing className="bg-[#fcf9f9]">
               <IconButton aria-label="upvote">
                 <BiSolidUpvote className="text-[#257425]" />
               </IconButton>

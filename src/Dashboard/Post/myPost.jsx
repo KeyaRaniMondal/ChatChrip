@@ -40,30 +40,14 @@ const MyPost = () => {
           {posts.length === 0 ? (
             <p>No posts available.</p>
           ) : (
-            <tr>
-              {posts.map((post) => (
-              <td>
-                
-                  <li key={post._id}>{post.posttitle}</li>
-              
-              </td>
-                ))}
-              <td>
-                {posts.map((post) => (
-                  <li key={post._id}>{post.votes}</li>
-                ))}
-              </td>
-              <td>
-                {posts.map((post) => (
-                  <li key={post._id}><FaCommentAlt/></li>
-                ))}
-              </td>
-              <td>
-                {posts.map((post) => (
-                  <li key={post._id}><MdDeleteForever/></li>
-                ))}
-              </td>
-            </tr>
+            posts.map((post) => (
+              <tr key={post._id}>
+                <td>{post.posttitle}</td>
+                <td>{post.votes}</td>
+                <td><FaCommentAlt /></td>
+                <td><MdDeleteForever /></td>
+              </tr>
+            ))
           )}
         </tbody>
       </table>
