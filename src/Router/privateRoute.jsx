@@ -1,13 +1,17 @@
-import { useContext } from "react"
-import { AuthContext } from "../Providers/AuthProvider"
-import { Navigate } from "react-router-dom"
+import { useContext } from "react";
+import { AuthContext } from "../Providers/AuthProvider";
+import { Navigate } from "react-router-dom";
+import Modal from "../Pages/Login/login";
 
-const PrivateRoute=({children,toggleForm})=>{
-    const{user,loading}=useContext(AuthContext)
-    if(user)
-    {
-        return children
+const PrivateRoute = ({ children, toggleModal }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user) {
+        return children;  // Render children if the user is logged in
     }
-    return <Navigate to={toggleForm}></Navigate>
-}
-export default PrivateRoute
+
+   return toggleModal // Show the login modal if the user is not logged in
+    // return <Navigate to="/login" />; // Optional: Navigate to a different route, or show modal directly
+};
+
+export default PrivateRoute;

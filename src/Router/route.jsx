@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'postDetail/:id',
-        element: <PostDetails></PostDetails>,
+        element: <PrivateRoute><PostDetails></PostDetails></PrivateRoute>,
         loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`)
       },
     ],
