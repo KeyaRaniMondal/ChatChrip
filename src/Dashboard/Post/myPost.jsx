@@ -41,11 +41,13 @@ const MyPost = () => {
             <p>No posts available.</p>
           ) : (
             <tr>
+              {posts.map((post) => (
               <td>
-                {posts.map((post) => (
+                
                   <li key={post._id}>{post.posttitle}</li>
-                ))}
+              
               </td>
+                ))}
               <td>
                 {posts.map((post) => (
                   <li key={post._id}>{post.votes}</li>

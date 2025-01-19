@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -16,9 +18,11 @@ const options = [
   { value: "plants", label: "plants" },
   { value: "Animals", label: "Animals" },
   { value: "Business", label: "Business" },
+  { value: "Gamming", label: "Gamming" },
 ];
 
 const AddPost = () => {
+  const navigate=useNavigate()
   const {user}=useContext(AuthContext)
   const { register, handleSubmit, setValue } = useForm();
   const axiosPublic = useAxiosPublic();
@@ -49,6 +53,7 @@ const AddPost = () => {
       },
     });
     if (res.data.success) {
+      const currentDate = new Date().toISOString();
       const addPost = {
         authorname: data.authorname,
         authorImage: data.authorImage,
@@ -57,12 +62,20 @@ const AddPost = () => {
         authoremail: data.authoremail,
         posttitle: data.posttitle,
         tags,
+        createdAt: currentDate,
       };
       const postRes=await axiosSecure.post('/posts',addPost)
       console.log("Post Data:",postRes.data);
       console.log("Post Data:", addPost);
       console.log(res.data);
-
+ Swal.fire({
+      title: "Success",
+      text: "Posted successfully!",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+    navigate('/')
     }
   };
 
