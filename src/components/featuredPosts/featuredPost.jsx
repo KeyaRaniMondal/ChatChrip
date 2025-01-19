@@ -9,62 +9,32 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import Pagination from "@mui/material/Pagination"; 
 import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import { BiDownvote, BiSolidUpvote } from "react-icons/bi";
 import { FaCommentDots } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme }) => ({
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-  variants: [
-    {
-      props: ({ expand }) => !expand,
-      style: {
-        transform: "rotate(0deg)",
-      },
-    },
-    {
-      props: ({ expand }) => !!expand,
-      style: {
-        transform: "rotate(180deg)",
-      },
-    },
-  ],
-}));
-
 const FeaturedCard = ({ search }) => {
   const [posts, setPosts] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [expanded, setExpanded] = useState(false);
+  const [sortByPopularity, setSortByPopularity] = useState(false);
+  const [page, setPage] = useState(1); 
+  const postsPerPage = 5; 
 
-  const handleTagSelect = (tag) => {
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-    }
-  };
-
+  // Fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        console.log("Search:", search);
-        console.log("Tags:", selectedTags.join(","));
-
         const response = await axios.get("http://localhost:5000/posts", {
           params: {
-            search: search,
+            search,
             tags: selectedTags.join(","),
+            sortByPopularity, 
           },
         });
-
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -72,27 +42,51 @@ const FeaturedCard = ({ search }) => {
     };
 
     fetchPosts();
-  }, [search, selectedTags]);
+  }, [search, selectedTags, sortByPopularity]);
 
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const toggleSortByPopularity = () => {
+    setSortByPopularity(!sortByPopularity);
   };
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const paginatedPosts = posts.slice(
+    (page - 1) * postsPerPage,
+    page * postsPerPage
+  );
 
   return (
     <div className="posts-container mt-10">
-      {posts.map((post) => (
+      <div className="controls mb-5 flex justify-between px-40">
+        <button
+          onClick={toggleSortByPopularity}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          {sortByPopularity ? "Sort by Newest" : "Sort by Popularity"}
+        </button>
+      </div>
+
+      {paginatedPosts.map((post) => (
         <Link key={post._id} to={`/postDetail/${post._id}`}>
           <Card sx={{ maxWidth: 700 }} className="ml-40 mb-5">
             <CardHeader
-              className="bg-[#1D1616] text-white"
+              // className="bg-[#1D1616] text-white"
               avatar={
                 <Avatar sx={{ bgcolor: red }} aria-label="recipe">
                   {post.authoremail.charAt(0).toUpperCase()}
                 </Avatar>
               }
               title={post.posttitle}
-              subheader={post.authoremail}
+              // subheader={post.authoremail}
+              subheader={new Date(post.createdAt).toLocaleString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+              })}
             />
             <CardMedia
               component="img"
@@ -100,7 +94,7 @@ const FeaturedCard = ({ search }) => {
               image={post.image}
               alt={post.posttitle}
             />
-            <CardContent className="">
+            <CardContent>
               <div className="my-2">
                 {post.tags.map((tag, index) => (
                   <button
@@ -109,14 +103,14 @@ const FeaturedCard = ({ search }) => {
                       e.stopPropagation();
                       handleTagSelect(tag);
                     }}
-                    className={`${selectedTags.includes(tag) ? "bg-green-500" : "bg-black"
-                      } text-white rounded-full px-4 py-2 m-1`}
+                    className={`${
+                      selectedTags.includes(tag) ? "bg-green-500" : "bg-black"
+                    } text-white rounded-full px-4 py-2 m-1`}
                   >
                     {tag}
                   </button>
                 ))}
               </div>
-
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 {post.postdescription}
               </Typography>
@@ -124,30 +118,29 @@ const FeaturedCard = ({ search }) => {
 
             <CardActions disableSpacing className="bg-[#eee8e8]">
               <IconButton aria-label="upvote">
-                <BiSolidUpvote className="text-[#257425] hover:'upvote'" />
+                <BiSolidUpvote className="text-[#257425]" />
               </IconButton>
+              <Typography>{post.upvote - post.downvote}</Typography>
               <IconButton aria-label="downvote">
                 <BiDownvote className="text-[#922424]" />
               </IconButton>
               <IconButton aria-label="comment">
                 <FaCommentDots />
               </IconButton>
-
-              <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              ></ExpandMore>
             </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Typography>Additional Post Details</Typography>
-              </CardContent>
-            </Collapse>
           </Card>
         </Link>
       ))}
+
+      {/* Pagination */}
+      <div className="pagination flex justify-center mt-5">
+        <Pagination
+          count={Math.ceil(posts.length / postsPerPage)}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </div>
     </div>
   );
 };
