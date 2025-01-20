@@ -28,19 +28,45 @@ const AddPost = () => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const [selectedTags, setSelectedTags] = useState([]); 
+  const [postCount, setPostCount] = useState(0);
+  const [isMemberView, setIsMemberView] = useState(false);
 
   const handleTagChange = (selectedOptions) => {
     setSelectedTags(selectedOptions || []); 
   };
 
   useEffect(() => {
+    const fetchPostCount = async () => {
+      try {
+        const response = await axiosSecure.get(`/posts/count?email=${user.email}`);
+        setPostCount(response.data.count);
+        setIsMemberView(response.data.count >= 5); 
+      } catch (error) {
+        console.error("Error fetching post count:", error);
+      }
+    };
+  
     if (user) {
-      setValue("authorname", user.username || "");  
-      setValue("authoremail", user.email || ""); 
-      setValue("authorImage", user.photoURL || ""); 
+      fetchPostCount();
+      setValue("authorname", user.username || "");
+      setValue("authoremail", user.email || "");
+      setValue("authorImage", user.photoURL || "");
     }
-  }, [user, setValue]);
+  }, [user, axiosSecure, setValue]);
+  
   const onSubmit = async (data) => {
+    if (postCount >= 5) {
+      Swal.fire({
+        title: "Post limit reached",
+        text: "You need to become a member to post more than 5 times.",
+        icon: "warning",
+        confirmButtonText: "Go to Membership",
+      }).then(() => {
+        navigate("/membership");
+      });
+      return;
+    }
+
     console.log("Form Data:", data);
 
     const tags = selectedTags.map((tag) => tag.value);
@@ -155,8 +181,5 @@ const AddPost = () => {
 };
 
 export default AddPost;
-
-
-
 
 

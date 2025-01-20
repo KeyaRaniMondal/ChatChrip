@@ -68,8 +68,9 @@ const ManageUsers = () => {
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Role</th>
+              <th>Make Admin</th>
               <th>Action</th>
+              <th>Subscription Status</th>
             </tr>
           </thead>
           <tbody>

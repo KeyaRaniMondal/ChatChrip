@@ -19,8 +19,8 @@ const Dashboard = () => {
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
           <ul className="menu bg-base-300 text-base-content min-h-full w-80 p-4">
-            {
-              isAdmin ?
+            {/* {
+              isAdmin ? */}
                 <>
                   <li>
                     <NavLink to="/dashboard/adminHome">
@@ -33,7 +33,7 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                 </>
-                :
+                {/* : */}
                 <>
                   <li>
                     <NavLink to="/dashboard/profile">
@@ -51,7 +51,7 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                 </>
-            }
+            {/* } */}
 
           </ul>
         </div>

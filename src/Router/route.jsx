@@ -14,6 +14,7 @@ import MyPost from "../Dashboard/Post/myPost";
 import PostDetails from "../Pages/PostDetails/postDetails";
 import AdminHome from "../Dashboard/Admin/adminHome/adminHome";
 import ManageUsers from "../Dashboard/Admin/manageUsers/manageUsers";
+import Membership from "../Pages/Member/membership";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: 'postCreation',
         element: <CreatePost></CreatePost>,
+      },
+      {
+        path: 'membership',
+        element: <Membership></Membership>
       },
       {
         path: 'postDetail/:id',
