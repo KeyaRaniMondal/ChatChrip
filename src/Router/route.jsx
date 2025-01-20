@@ -12,6 +12,8 @@ import Profile from "../Dashboard/Profile/profile";
 import CreatePost from "../Dashboard/Post/createPost";
 import MyPost from "../Dashboard/Post/myPost";
 import PostDetails from "../Pages/PostDetails/postDetails";
+import AdminHome from "../Dashboard/Admin/adminHome/adminHome";
+import ManageUsers from "../Dashboard/Admin/manageUsers/manageUsers";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +51,14 @@ export const router = createBrowserRouter([
         path: 'myPost',
         element: <MyPost></MyPost>
       },
-      
+      {
+        path:'adminHome',
+        element:<AdminHome></AdminHome>
+      },
+      {
+        path:'manageUser',
+        element:<ManageUsers></ManageUsers>
+      }
     ],
   },
 ]);

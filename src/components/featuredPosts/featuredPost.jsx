@@ -16,6 +16,7 @@ import { BiDownvote, BiSolidUpvote } from "react-icons/bi";
 import { FaCommentDots } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoSparkles } from "react-icons/io5";
+import { IoIosShareAlt } from "react-icons/io";
 
 const FeaturedCard = ({ search }) => {
   const [posts, setPosts] = useState([]);
@@ -127,6 +128,9 @@ const FeaturedCard = ({ search }) => {
               </IconButton>
               <IconButton aria-label="comment">
                 <FaCommentDots />
+              </IconButton>
+              <IconButton aria-label="share">
+              <IoIosShareAlt/>
               </IconButton>
             </CardActions>
           </Card>
