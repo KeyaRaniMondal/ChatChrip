@@ -1,6 +1,8 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckOutForm from "./checkout";
+
+
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 
 const Payment = () => {
@@ -15,3 +17,4 @@ const Payment = () => {
 };
 
 export default Payment;
+

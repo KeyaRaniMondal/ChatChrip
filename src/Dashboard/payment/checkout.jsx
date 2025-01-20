@@ -2,15 +2,18 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../shared/useAxiosSecure";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
-    const { user } = useContext(AuthContext); 
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate(); 
     const [clientSecret, setClientSecret] = useState(null);
-    const [transcationId, setTransactionId] = useState('');
-    const price = 50; 
+    const [transactionId, setTransactionId] = useState('');
+    const price = 5; 
+
     useEffect(() => {
         if (price) {
             axiosSecure.post('/create-payment-intent', { price })
@@ -29,7 +32,7 @@ const CheckOutForm = () => {
             return;
         }
 
-        const card = elements.getElement(CardElement); 
+        const card = elements.getElement(CardElement);
 
         const { error: paymentError, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
@@ -52,19 +55,33 @@ const CheckOutForm = () => {
         if (confirmError) {
             console.error('Payment Confirmation Error:', confirmError);
             setTransactionId(paymentIntent.id);
-            // Store the payment info to the database
+
             const payment = {
                 email: user.email,
                 price: price,
-                transcationId: paymentIntent.id,
+                transactionId: paymentIntent.id,
                 date: new Date(),
-                status: 'pending'
+                status: 'failed'
             };
 
-            const res = await axiosSecure.post('/payments', payment);
-            console.log(res);
+            await axiosSecure.post('/payments', payment);
         } else if (paymentIntent) {
             console.log('Payment Successful:', paymentIntent);
+
+       
+            const payment = {
+                email: user.email,
+                price: price,
+                transactionId: paymentIntent.id,
+                date: new Date(),
+                status: 'success'
+            };
+
+            await axiosSecure.post('/payments', payment);
+
+            await axiosSecure.post('/update-membership', { email: user.email });
+
+            navigate(`/profile`);
         }
     };
 
@@ -89,9 +106,10 @@ const CheckOutForm = () => {
             <button className="btn btn-primary" type="submit" disabled={!stripe || !clientSecret}>
                 Pay
             </button>
-            {transcationId && <p>Transaction ID: {transcationId}</p>}
+            {transactionId && <p>Transaction ID: {transactionId}</p>}
         </form>
     );
 };
 
 export default CheckOutForm;
+
