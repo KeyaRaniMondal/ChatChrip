@@ -1,7 +1,10 @@
-const Membership=()=>{
-    return(
-        <div>
 
+import Payment from "../../Dashboard/payment/payment"
+
+const Membership = () => {
+    return (
+        <div>
+            <Payment></Payment>
         </div>
     )
 }
