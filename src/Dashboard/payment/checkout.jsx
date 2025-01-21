@@ -79,9 +79,9 @@ const CheckOutForm = () => {
     
         await axiosSecure.post('/payments', payment);
     
-        await axiosSecure.post('/update-membership', { email: user.email });
-    
-        navigate('dashboard/profile');
+        await axiosSecure.post('/update-membership', { email: user.email }); 
+        navigate(`/dashboard/profile`); 
+        
     };
     
 

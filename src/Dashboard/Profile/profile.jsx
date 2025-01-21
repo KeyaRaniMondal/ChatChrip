@@ -5,6 +5,7 @@ import bronze from '../../assets/bronze.jpg'
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
+
   const [posts, setPosts] = useState([]);
   const [hasBronzeBadge, setHasBronzeBadge] = useState(false);
 
@@ -60,18 +61,20 @@ const Profile = () => {
         <h3 className="text-lg font-semibold mb-4">My Recent Posts</h3>
         {posts.length > 0 ? (
           <ul className="space-y-4">
-            {posts.map((post, index) => (
+            {posts.slice(0, 3).map((post, index) => (
               <li key={index} className="p-4 border rounded-lg shadow">
-                <h4 className="text-xl font-bold">{post.posttitle
-                }</h4>
+                <h4 className="text-xl font-bold">{post.posttitle}</h4>
                 <p className="text-gray-600">{post.content}</p>
-                <p className="text-sm text-gray-400 mt-2">Posted on: {new Date(post.createdAt).toLocaleDateString()}</p>
+                <p className="text-sm text-gray-400 mt-2">
+                  Posted on: {new Date(post.createdAt).toLocaleDateString()}
+                </p>
               </li>
             ))}
           </ul>
         ) : (
           <p className="text-gray-500">You have no recent posts.</p>
         )}
+
       </div>
     </div>
   );
