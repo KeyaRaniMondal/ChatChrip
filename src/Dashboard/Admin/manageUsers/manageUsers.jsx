@@ -13,6 +13,33 @@ const ManageUsers = () => {
     }
   });
 
+  
+  const handleMembershipUpdate = (user) => {
+    axiosSecure.post('/update-membership', { email: user.email })
+      .then((res) => {
+        if (res.data.success) {
+          refetch(); // Refresh users after successful update
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: `${user.name}'s membership updated to ${res.data.user.membership}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: `Failed to update membership: ${error.response.data.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
+
+  
   const handleMakeAdmin = (user) => {
     axiosSecure.patch(`/users/admin/${user._id}`)
       .then(res => {
@@ -73,7 +100,7 @@ const ManageUsers = () => {
               <th>Subscription Status</th>
             </tr>
           </thead>
-          <tbody>
+          {/* <tbody>
             {users.map((user, index) => (
               <tr key={user._id}>
                 <th>{index + 1}</th>
@@ -101,7 +128,40 @@ const ManageUsers = () => {
                 </td>
               </tr>
             ))}
-          </tbody>
+          </tbody> */}
+          <tbody>
+    {users.map((user, index) => (
+        <tr key={user._id}>
+            <th>{index + 1}</th>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>
+                {user.role === 'admin' ? 'Admin' : (
+                    <button onClick={() => handleMakeAdmin(user)} className="btn btn-lg bg-orange-500">
+                        <FaUsers className="text-white text-2xl" />
+                    </button>
+                )}
+            </td>
+            <td>
+                <button onClick={() => handleDeleteUser(user)} className="btn btn-ghost btn-lg">
+                    <FaTrashAlt className="text-red-600" />
+                </button>
+            </td>
+            <td>{user.membership || 'None'}</td> {/* Display user's membership */}
+ {/* Display subscription status */}
+ <td>
+  <button
+    onClick={() => handleMembershipUpdate(user)}
+    className="btn btn-lg bg-green-500 text-white"
+  >
+    Update Membership
+  </button>
+</td>
+
+        </tr>
+    ))}
+</tbody>
+
         </table>
       </div>
     </div>

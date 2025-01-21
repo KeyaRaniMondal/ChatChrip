@@ -54,21 +54,19 @@ const CheckOutForm = () => {
     
         if (confirmError) {
             console.error('Payment Confirmation Error:', confirmError);
-    
-            const payment = {
+            await axiosSecure.post('/payments', {
                 email: user.email,
                 price: price,
                 transactionId: paymentIntent?.id || 'N/A',
                 date: new Date(),
                 status: 'failed',
-            };
-    
-            await axiosSecure.post('/payments', payment);
+            });
             return;
         }
     
         console.log('Payment Successful:', paymentIntent);
     
+        // Save payment and update user
         const payment = {
             email: user.email,
             price: price,
@@ -76,13 +74,75 @@ const CheckOutForm = () => {
             date: new Date(),
             status: 'success',
         };
-    
         await axiosSecure.post('/payments', payment);
     
-        await axiosSecure.post('/update-membership', { email: user.email }); 
-        navigate(`/dashboard/profile`); 
-        
+        // Update user's subscription to premium
+        await axiosSecure.post('/update-membership', { email: user.email, role: 'gold' });
+    
+        // Redirect user to the profile page
+        navigate(`/dashboard/profile`);
     };
+    
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    
+    //     if (!stripe || !elements || !clientSecret) {
+    //         console.error('Stripe.js has not loaded or clientSecret is missing');
+    //         return;
+    //     }
+    
+    //     const card = elements.getElement(CardElement);
+    
+    //     const { error: paymentError, paymentMethod } = await stripe.createPaymentMethod({
+    //         type: 'card',
+    //         card,
+    //         billing_details: {
+    //             email: user?.email || 'anonymous',
+    //             name: user?.displayName || 'anonymous',
+    //         },
+    //     });
+    
+    //     if (paymentError) {
+    //         console.error('Payment Method Error:', paymentError);
+    //         return;
+    //     }
+    
+    //     const { error: confirmError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+    //         payment_method: paymentMethod.id,
+    //     });
+    
+    //     if (confirmError) {
+    //         console.error('Payment Confirmation Error:', confirmError);
+    
+    //         const payment = {
+    //             email: user.email,
+    //             price: price,
+    //             transactionId: paymentIntent?.id || 'N/A',
+    //             date: new Date(),
+    //             status: 'failed',
+    //         };
+    
+    //         await axiosSecure.post('/payments', payment);
+    //         return;
+    //     }
+    
+    //     console.log('Payment Successful:', paymentIntent);
+    
+    //     const payment = {
+    //         email: user.email,
+    //         price: price,
+    //         transactionId: paymentIntent.id,
+    //         date: new Date(),
+    //         status: 'success',
+    //     };
+    
+    //     await axiosSecure.post('/payments', payment);
+    
+    //     await axiosSecure.post('/update-membership', { email: user.email }); 
+    //     navigate(`/dashboard/profile`); 
+        
+    // };
     
 
     return (

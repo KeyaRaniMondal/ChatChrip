@@ -32,8 +32,18 @@ const Dashboard = () => {
                       <MdAdminPanelSettings /> Manage Users
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink to="/dashboard/reportedActivities">
+                      <MdAdminPanelSettings /> Activities
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/dashboard/announcement">
+                      <MdAdminPanelSettings />Make Announcement
+                    </NavLink>
+                  </li>
                 </>
-                {/* : */}
+                {/* :  */}
                 <>
                   <li>
                     <NavLink to="/dashboard/profile">
@@ -51,7 +61,7 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                 </>
-            {/* } */}
+           {/* }  */}
 
           </ul>
         </div>

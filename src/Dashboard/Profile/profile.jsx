@@ -8,10 +8,17 @@ const Profile = () => {
 
   const [posts, setPosts] = useState([]);
   const [hasBronzeBadge, setHasBronzeBadge] = useState(false);
-
+  const [hasGoldBadge, setHasGoldBadge] = useState(false);
   useEffect(() => {
     if (user) {
-      axios.get(`http://localhost:5000/posts?email=${user.email}&userId=${user.uid}&limit=3`)
+        axios.get(`/users/${user.email}`)
+            .then(response => {
+                setHasBronzeBadge(response.data.subscription === 'bronze');
+                setHasGoldBadge(response.data.subscription === 'gold'); // Add gold badge check
+            })
+            .catch(error => console.error("Error fetching user subscription:", error));
+    }
+    axios.get(`http://localhost:5000/posts?email=${user.email}&userId=${user.uid}&limit=3`)
         .then(response => {
           console.log("API Response:", response.data);
           setPosts(Array.isArray(response.data) ? response.data : response.data.data || []);
@@ -20,8 +27,22 @@ const Profile = () => {
           console.error("Error fetching user posts:", error);
           setPosts([]);
         });
-    }
-  }, [user]);
+}, [user]);
+
+
+  // useEffect(() => {
+  //   if (user) {
+  //     axios.get(`http://localhost:5000/posts?email=${user.email}&userId=${user.uid}&limit=3`)
+  //       .then(response => {
+  //         console.log("API Response:", response.data);
+  //         setPosts(Array.isArray(response.data) ? response.data : response.data.data || []);
+  //       })
+  //       .catch(error => {
+  //         console.error("Error fetching user posts:", error);
+  //         setPosts([]);
+  //       });
+  //   }
+  // }, [user]);
 
 
   return (
@@ -56,6 +77,11 @@ const Profile = () => {
           )}
         </div>
       )}
+<div className="badges mt-6 text-center">
+    <h3 className="text-lg font-semibold mb-2">Badges</h3>
+    {hasBronzeBadge && <div className="badge bg-bronze text-white px-4 py-2 rounded-full">🥉 Bronze Badge</div>}
+    {hasGoldBadge && <div className="badge bg-gold text-white px-4 py-2 rounded-full">🏆 Gold Badge</div>} {/* Gold Badge */}
+</div>
 
       <div className="recent-posts mt-8">
         <h3 className="text-lg font-semibold mb-4">My Recent Posts</h3>

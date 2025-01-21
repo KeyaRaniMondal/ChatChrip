@@ -22,17 +22,17 @@ const options = [
 ];
 
 const AddPost = () => {
-  const navigate=useNavigate()
-  const {user}=useContext(AuthContext)
+  const navigate = useNavigate()
+  const { user } = useContext(AuthContext)
   const { register, handleSubmit, setValue } = useForm();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
-  const [selectedTags, setSelectedTags] = useState([]); 
+  const [selectedTags, setSelectedTags] = useState([]);
   const [postCount, setPostCount] = useState(0);
   const [isMemberView, setIsMemberView] = useState(false);
 
   const handleTagChange = (selectedOptions) => {
-    setSelectedTags(selectedOptions || []); 
+    setSelectedTags(selectedOptions || []);
   };
 
   useEffect(() => {
@@ -40,12 +40,12 @@ const AddPost = () => {
       try {
         const response = await axiosSecure.get(`/posts/count?email=${user.email}`);
         setPostCount(response.data.count);
-        setIsMemberView(response.data.count >= 5); 
+        setIsMemberView(response.data.subscription === 'gold');
       } catch (error) {
         console.error("Error fetching post count:", error);
       }
     };
-  
+
     if (user) {
       fetchPostCount();
       setValue("authorname", user.username || "");
@@ -53,11 +53,11 @@ const AddPost = () => {
       setValue("authorImage", user.photoURL || "");
     }
   }, [user, axiosSecure, setValue]);
-  
+
   const onSubmit = async (data) => {
-    if (postCount >= 5) {
+    if (!isMemberView && postCount >= 5) {
       Swal.fire({
-        title: "Post limit reached",
+        title: "Post Limit Reached",
         text: "You need to become a member to post more than 5 times.",
         icon: "warning",
         confirmButtonText: "Go to Membership",
@@ -67,43 +67,59 @@ const AddPost = () => {
       return;
     }
 
-    console.log("Form Data:", data);
+    try {
+      // Upload image to the hosting service
+      const imageFile = { image: data.image[0] };
+      const res = await axiosPublic.post(image_hosting_api, imageFile, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-    const tags = selectedTags.map((tag) => tag.value);
-    console.log("Selected Tags:", tags);
+      console.log("Image Upload Response:", res.data);
 
-    const imageFile = { image: data.image[0] };
-    const res = await axiosPublic.post(image_hosting_api, imageFile, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    if (res.data.success) {
-      const currentDate = new Date().toISOString();
-      const addPost = {
-        authorname: data.authorname,
-        authorImage: data.authorImage,
-        postdescription: data.postdescription,
-        image: res.data.data.display_url,
-        authoremail: data.authoremail,
-        posttitle: data.posttitle,
-        tags,
-        createdAt: currentDate,
-      };
-      const postRes=await axiosSecure.post('/posts',addPost)
-      console.log("Post Data:",postRes.data);
-      console.log("Post Data:", addPost);
-      console.log(res.data);
- Swal.fire({
-      title: "Success",
-      text: "Posted successfully!",
-      icon: "success",
-      timer: 1500,
-      showConfirmButton: false,
-    });
-    navigate('/')
+      if (res.data.success) {
+        //  post data
+        const currentDate = new Date().toISOString();
+        const tags = selectedTags.map((tag) => tag.value);
+        const addPost = {
+          authorname: data.authorname,
+          authorImage: data.authorImage,
+          postdescription: data.postdescription,
+          image: res.data.data.display_url,
+          authoremail: data.authoremail,
+          posttitle: data.posttitle,
+          tags,
+          createdAt: currentDate,
+        };
+
+        console.log("Payload to be sent to /posts:", addPost);
+
+        // Save post to the backend
+        const postRes = await axiosSecure.post("/posts", addPost);
+        console.log("Post Response:", postRes.data);
+
+        Swal.fire({
+          title: "Success",
+          text: "Posted successfully!",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        navigate("/");
+      } else {
+        throw new Error("Image upload failed");
+      }
+    } catch (error) {
+      console.error("Error uploading post:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Failed to create post. Please try again.",
+        icon: "error",
+      });
     }
   };
+
 
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -169,7 +185,7 @@ const AddPost = () => {
                 components={animatedComponents}
                 isMulti
                 options={options}
-                onChange={handleTagChange} 
+                onChange={handleTagChange}
               />
             </label>
             <input type="submit" className="btn btn-warning mt-4" />
@@ -181,5 +197,6 @@ const AddPost = () => {
 };
 
 export default AddPost;
+
 
 

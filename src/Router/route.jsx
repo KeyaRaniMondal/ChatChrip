@@ -15,6 +15,8 @@ import PostDetails from "../Pages/PostDetails/postDetails";
 import AdminHome from "../Dashboard/Admin/adminHome/adminHome";
 import ManageUsers from "../Dashboard/Admin/manageUsers/manageUsers";
 import Membership from "../Pages/Member/membership";
+import Announcement from "../Dashboard/Announcement/announcement";
+import Activities from "../Dashboard/Admin/Activities/activities";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +65,14 @@ export const router = createBrowserRouter([
       {
         path:'manageUser',
         element:<ManageUsers></ManageUsers>
+      },
+      {
+        path:'announcement',
+        element:<Announcement></Announcement>
+      },
+      {
+        path:'reportedActivities',
+        element:<Activities></Activities>
       }
     ],
   },
