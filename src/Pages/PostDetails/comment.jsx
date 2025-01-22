@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import useAxiosSecure from "../../shared/useAxiosSecure";
 import CommentsPage from "./commentPage";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Comment = ({ postId, onCommentAdded }) => {
   const [commentText, setCommentText] = useState("");
   const axiosSecure = useAxiosSecure();
-
+const {user}=useContext(AuthContext)
   const handleAddComment = async (e) => {
     e.preventDefault();
 
@@ -14,6 +16,7 @@ const Comment = ({ postId, onCommentAdded }) => {
     try {
       const response = await axiosSecure.post(`/posts/${postId}/comments`, {
         text: commentText,
+        authorEmail:user?.email,
       });
       onCommentAdded(response.data.comment);
       setCommentText(""); 
@@ -38,9 +41,9 @@ const Comment = ({ postId, onCommentAdded }) => {
       >
         Submit
       </button>
-      
+      <Link to={`/comments/${postId}`}>Show All Comments</Link>
     </form>
-    <CommentsPage></CommentsPage>
+    
     </div>
     
   );

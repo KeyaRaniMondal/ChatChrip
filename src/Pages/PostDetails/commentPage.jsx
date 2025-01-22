@@ -1,42 +1,31 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import useAxiosSecure from '../../shared/useAxiosSecure';
 
-const CommentsPage = ({ postId }) => {
+const CommentsPage = () => {
+  const { postId } = useParams(); 
   const [comments, setComments] = useState([]);
   const [selectedFeedback, setSelectedFeedback] = useState({});
   const [modalComment, setModalComment] = useState("");
+  const axiosSecure=useAxiosSecure()
 
-  // useEffect(() => {
-  //   const fetchComments = async () => {
-  //     try {
-  //       const response = await axios.get(`/posts/${postId}/comments`);
-  //       setComments(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching comments:", error);
-  //     }
-  //   };
-
-  //   fetchComments();
-  // }, [postId]);
-  // const [comments, setComments] = useState([]);
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`/posts/${postId}/comments`);
-        if (Array.isArray(response.data)) {
-          setComments(response.data);
-        } else {
-          console.error("Expected an array, received:", response.data);
-          setComments([]); 
-        }
+        const response = await axiosSecure.get(`/posts/${postId}/comments`);
+        console.log(response.data); 
+        setComments(response.data); 
       } catch (error) {
         console.error("Error fetching comments:", error);
-        setComments([]); 
       }
     };
-  
-    fetchComments();
+
+    if (postId) {
+      fetchComments();
+    }
   }, [postId]);
+
   const handleFeedbackChange = (commentId, feedback) => {
     setSelectedFeedback((prev) => ({
       ...prev,
@@ -72,77 +61,82 @@ const CommentsPage = ({ postId }) => {
           </tr>
         </thead>
         <tbody>
-          {comments.map((comment) => (
-            <tr key={comment._id}>
-              <td className="border px-4 py-2">{comment.email}</td>
-              <td className="border px-4 py-2">
-                {comment.text.length > 20 ? (
-                  <>
-                    {comment.text.substring(0, 20)}...
-                    <button
-                      className="text-blue-500 underline ml-1"
-                      onClick={() => setModalComment(comment.text)}
-                    >
-                      Read More
-                    </button>
-                  </>
-                ) : (
-                  comment.text
-                )}
-              </td>
-              <td className="border px-4 py-2">
-                <select
-                  className="border rounded p-1"
-                  value={selectedFeedback[comment._id] || ""}
-                  onChange={(e) => handleFeedbackChange(comment._id, e.target.value)}
-                  disabled={selectedFeedback[comment._id] === "reported"}
-                >
-                  <option value="" disabled>
-                    Select Feedback
-                  </option>
-                  <option value="Offensive Language">Offensive Language</option>
-                  <option value="Spam Content">Spam Content</option>
-                  <option value="Hate Speech">Hate Speech</option>
-                </select>
-              </td>
-              <td className="border px-4 py-2">
-                <button
-                  className={`bg-red-500 text-white p-2 rounded ${
-                    !selectedFeedback[comment._id] ||
-                    selectedFeedback[comment._id] === "reported"
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
-                  disabled={
-                    !selectedFeedback[comment._id] ||
-                    selectedFeedback[comment._id] === "reported"
-                  }
-                  onClick={() => handleReportClick(comment._id)}
-                >
-                  {selectedFeedback[comment._id] === "reported"
-                    ? "Reported"
-                    : "Report"}
-                </button>
-              </td>
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <tr key={comment._id}>
+                <td className="border px-4 py-2">{comment.authorEmail}</td> 
+                <td className="border px-4 py-2">
+                  {comment.text.length > 20 ? (
+                    <>
+                      {comment.text.substring(0, 20)}...
+                      <button 
+                        className="text-blue-500 underline ml-1" 
+                        onClick={() => setModalComment(comment.text)}
+                      >
+                        Read More
+                      </button>
+                    </>
+                  ) : (
+                    comment.text
+                  )}
+                </td>
+                <td className="border px-4 py-2">
+                  <select 
+                    className="border rounded p-1" 
+                    value={selectedFeedback[comment._id] || ""} 
+                    onChange={(e) => 
+                      handleFeedbackChange(comment._id, e.target.value)
+                    }
+                    disabled={selectedFeedback[comment._id] === "reported"}
+                  >
+                    <option value="" disabled>Select Feedback</option>
+                    <option value="Offensive Language">Offensive Language</option>
+                    <option value="Spam Content">Spam Content</option>
+                    <option value="Hate Speech">Hate Speech</option>
+                  </select>
+                </td>
+                <td className="border px-4 py-2">
+                  <button 
+                    className={`bg-red-500 text-white p-2 rounded ${
+                      !selectedFeedback[comment._id] || 
+                      selectedFeedback[comment._id] === "reported" 
+                        ? "opacity-50 cursor-not-allowed" 
+                        : ""
+                    }`}
+                    disabled={
+                      !selectedFeedback[comment._id] || 
+                      selectedFeedback[comment._id] === "reported"
+                    }
+                    onClick={() => handleReportClick(comment._id)}
+                  >
+                    {selectedFeedback[comment._id] === "reported" 
+                      ? "Reported" 
+                      : "Report"}
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4" className="text-center">No comments available.</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
-      {/* Modal for Read More */}
       {modalComment && (
-        <div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        <div 
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" 
           onClick={() => setModalComment("")}
         >
-          <div
-            className="bg-white p-5 rounded shadow-lg w-1/2"
-            onClick={(e) => e.stopPropagation()}
+          <div 
+            className="bg-white p-5 rounded shadow-lg w-1/2" 
+            onClick={(e) => e.stopPropagation()} 
           >
             <h2 className="text-xl font-bold mb-3">Full Comment</h2>
             <p>{modalComment}</p>
-            <button
-              className="bg-blue-500 text-white p-2 rounded mt-3"
+            <button 
+              className="bg-blue-500 text-white p-2 rounded mt-3" 
               onClick={() => setModalComment("")}
             >
               Close
@@ -154,4 +148,4 @@ const CommentsPage = ({ postId }) => {
   );
 };
 
-export default CommentsPage ;
+export default CommentsPage;

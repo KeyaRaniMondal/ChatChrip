@@ -17,6 +17,7 @@ import ManageUsers from "../Dashboard/Admin/manageUsers/manageUsers";
 import Membership from "../Pages/Member/membership";
 import Announcement from "../Dashboard/Announcement/announcement";
 import Activities from "../Dashboard/Admin/Activities/activities";
+import CommentsPage from "../Pages/PostDetails/commentPage";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,11 @@ export const router = createBrowserRouter([
         element: <PrivateRoute><PostDetails></PostDetails></PrivateRoute>,
         loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`)
       },
+      {
+        path: 'comments/:postId',
+        element: <CommentsPage />
+      }
+      
     ],
   },
   {
