@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import axios from "axios";
+import useAxiosSecure from "../../shared/useAxiosSecure";
+import CommentsPage from "./commentPage";
 
-const Comment= ({ postId, onCommentAdded }) => {
+const Comment = ({ postId, onCommentAdded }) => {
   const [commentText, setCommentText] = useState("");
+  const axiosSecure = useAxiosSecure();
 
   const handleAddComment = async (e) => {
     e.preventDefault();
 
+    console.log("postId:", postId, "commentText:", commentText);
+
     try {
-      const response = await axios.post(`/posts/${postId}/comments`, {
+      const response = await axiosSecure.post(`/posts/${postId}/comments`, {
         text: commentText,
       });
-      onCommentAdded(response.data.comment); // Notify parent component of new comment
-      setCommentText(""); // Clear the input field
+      onCommentAdded(response.data.comment);
+      setCommentText(""); 
     } catch (error) {
       console.error("Error adding comment:", error);
     }
   };
 
   return (
-    <form onSubmit={handleAddComment} className="add-comment mt-5">
+    <div>
+<form onSubmit={handleAddComment} className="add-comment mt-5">
       <textarea
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
@@ -33,9 +38,14 @@ const Comment= ({ postId, onCommentAdded }) => {
       >
         Submit
       </button>
+      
     </form>
+    <CommentsPage></CommentsPage>
+    </div>
+    
   );
 };
 
 export default Comment;
+
 

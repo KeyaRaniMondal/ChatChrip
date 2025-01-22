@@ -2,6 +2,7 @@ import { useState } from "react";
 import FeaturedCard from "../../../components/featuredPosts/featuredPost"
 import Banner from "../Banner/banner"
 import Tags from "../Sidebar/tags"
+import Announcement from "../../../Dashboard/Announcement/announcement";
 
 const Home = () => {
     const [search, setSearch] = useState(""); 
@@ -11,6 +12,7 @@ const Home = () => {
             <div className="flex justify-evenly">
                 <Tags></Tags>
                 <FeaturedCard  search={search}></FeaturedCard>
+                {/* <Announcement></Announcement> */}
             </div>
         </div>
     )

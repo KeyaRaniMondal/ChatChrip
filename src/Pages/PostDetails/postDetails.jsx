@@ -10,6 +10,11 @@ import Comment from './comment';
 
 const PostDetails = () => {
     const [comments, setComments] = useState([]);
+    
+    
+    const handleCommentAdded = (newComment) => {
+      setComments((prevComments) => [...prevComments, newComment]);
+    };
   const post = useLoaderData();
   const { _id, authorname, authorImage, postdescription, image, authoremail, posttitle, tags, upvote, downvote } = post;
 
@@ -35,7 +40,7 @@ const PostDetails = () => {
       <CardActions disableSpacing>
         <VoteSystem postId={_id} upvote={upvote} downvote={downvote} />
       </CardActions>
-      <Comment postId={_id} />
+      <Comment postId={_id}  onCommentAdded={handleCommentAdded} />
     </div>
   );
 };

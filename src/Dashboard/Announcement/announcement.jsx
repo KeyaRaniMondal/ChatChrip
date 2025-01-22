@@ -52,7 +52,7 @@ const Announcement = () => {
       });
 
       setAnnouncements([...announcements, response.data]);
-      setAnnouncementCount(announcementCount + 1); // Update count
+      setAnnouncementCount(setAnnouncementCount  + 1); // Update count
     } catch (error) {
       console.error("Error creating announcement:", error);
       Swal.fire({
