@@ -19,40 +19,41 @@ const Modal = ({ isModalOpen, toggleModal }) => {
   const toggleForm = () => setIsLogin(!isLogin);
 
    // Google Sign-In Handler
-const handleGoogleSignIn = async () => {
-  const auth = getAuth(); 
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    setUser(user);
-    // const response = await axiosPublic.get(`/users/${user.uid}`);
-    // if (!response.data) {
-      await axiosPublic.post("/users", {
-        username: user.displayName || "Default Username",  
-        email: user.email,
-        image: user.photoURL,  
+   const handleGoogleSignIn = async () => {
+    const auth = getAuth(); 
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      setUser(user);
+      const response = await axiosPublic.get(`/users/${user.email}`);
+      if (!response.data) {
+        await axiosPublic.post("/users", {
+          username: user.displayName || "Default Username",
+          email: user.email,
+          image: user.photoURL,
+        },{withCredentials:true});
+      }
+  
+      Swal.fire({
+        title: "Success",
+        text: "Google Sign-In successful!",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
       });
-    // }
-
-    Swal.fire({
-      title: "Success",
-      text: "Google Sign-In successful!",
-      icon: "success",
-      timer: 1500,
-      showConfirmButton: false,
-    });
-
-    toggleModal();
-  } catch (error) {
-    console.error("Google Sign-In Error: ", error.message);
-    Swal.fire({
-      title: "Error",
-      text: error.message || "Something went wrong. Please try again.",
-      icon: "error",
-    });
-    toggleModal();
-  }
-};
+  
+      toggleModal();
+    } catch (error) {
+      console.error("Google Sign-In Error: ", error.message);
+      Swal.fire({
+        title: "Error",
+        text: error.message || "Something went wrong. Please try again.",
+        icon: "error",
+      });
+      toggleModal();
+    }
+  };
+  
 
 
   const {
@@ -121,8 +122,6 @@ const handleGoogleSignIn = async () => {
           // Registration Logic
           const user = await createUser(values.email, values.password);
           await updateUserProfile(values.username, imageUrl);
-
-          // Add user to database
           await axiosPublic.post("/users", {
             username: values.username,
             email: values.email,
