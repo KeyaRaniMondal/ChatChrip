@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import axios from 'axios';
+import useAdmin from '../../../hooks/useAdmin';
 
 const AdminHome = () => {
 //   const [admin, setAdmin] = useState({});
@@ -43,8 +44,8 @@ const AdminHome = () => {
 //     }
 //   };
 
-  return (
-    <div className="container mx-auto mt-5">
+  // return (
+  //   <div className="container mx-auto mt-5">
       {/* Admin Profile Section */}
       {/* <div className="flex items-center mb-10">
         <img src={admin.image || '/placeholder.jpg'} alt="Admin" className="w-24 h-24 rounded-full mr-5" /> 
@@ -108,8 +109,23 @@ const AdminHome = () => {
           ))} 
         </ul>
       </div> */}
-    </div>
-  );
+    {/* </div> */}
+    const [isAdmin, isAdminLoading] = useAdmin();
+
+    if (isAdminLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (!isAdmin) {
+        return <p>You are not authorized to access this page.</p>; 
+    }
+
+    return (
+        <div>
+            <h1>Welcome, Admin!</h1>
+            <p>This is the admin dashboard where you can manage posts, users, and more.</p>
+        </div>
+    );
 };
 
 export default AdminHome;

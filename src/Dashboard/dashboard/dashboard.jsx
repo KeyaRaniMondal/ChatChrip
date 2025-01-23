@@ -2,9 +2,10 @@ import { FaSignsPost, FaUserPen, FaUserShield } from "react-icons/fa6";
 import Navbar from "../../components/nav";
 import { MdAdminPanelSettings, MdPostAdd } from "react-icons/md";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../../hooks/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true
+  const [isAdmin] = useAdmin();
   return (
     <div>
       <Navbar></Navbar>
@@ -19,8 +20,8 @@ const Dashboard = () => {
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
           <ul className="menu bg-base-300 text-base-content min-h-full w-80 p-4">
-            {/* {
-              isAdmin ? */}
+            {
+              isAdmin ?
                 <>
                   <li>
                     <NavLink to="/dashboard/adminHome">
@@ -43,7 +44,7 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                 </>
-                {/* :  */}
+               :  
                 <>
                   <li>
                     <NavLink to="/dashboard/profile">
@@ -61,7 +62,7 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                 </>
-           {/* }  */}
+           }  
 
           </ul>
         </div>

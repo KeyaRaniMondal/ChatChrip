@@ -18,6 +18,7 @@ import Membership from "../Pages/Member/membership";
 import Announcement from "../Dashboard/Announcement/announcement";
 import Activities from "../Dashboard/Admin/Activities/activities";
 import CommentsPage from "../Pages/PostDetails/commentPage";
+import AdminRoute from "./adminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -30,11 +31,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'postCreation',
-        element: <CreatePost></CreatePost>,
+        element: <PrivateRoute><CreatePost></CreatePost></PrivateRoute>
       },
       {
         path: 'membership',
-        element: <Membership></Membership>
+        element: <PrivateRoute><Membership></Membership></PrivateRoute>
       },
       {
         path: 'postDetail/:id',
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'comments/:postId',
-        element: <CommentsPage />
+        element: <PrivateRoute><CommentsPage /></PrivateRoute>
       }
       
     ],
@@ -54,31 +55,31 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'addPost',
-        element: <AddPost></AddPost>,
+        element: <PrivateRoute><AddPost></AddPost></PrivateRoute>,
       },
       {
         path: 'profile',
-        element: <Profile></Profile>
+        element: <PrivateRoute><Profile></Profile></PrivateRoute>
       },
       {
         path: 'myPost',
-        element: <MyPost></MyPost>
+        element: <PrivateRoute><MyPost></MyPost></PrivateRoute>
       },
       {
         path:'adminHome',
-        element:<AdminHome></AdminHome>
+        element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
       },
       {
         path:'manageUser',
-        element:<ManageUsers></ManageUsers>
+        element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
       },
       {
         path:'announcement',
-        element:<Announcement></Announcement>
+        element:<AdminRoute><Announcement></Announcement></AdminRoute>
       },
       {
         path:'reportedActivities',
-        element:<Activities></Activities>
+        element:<AdminRoute><Activities></Activities></AdminRoute>
       }
     ],
   },
