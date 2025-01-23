@@ -45,30 +45,30 @@ const ManageUsers = () => {
       });
   };
 
-  const handleMembershipUpdate = (user) => {
-    axiosSecure.post('/update-membership', { email: user.email })
-      .then((res) => {
-        if (res.data.success) {
-          refetch();
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: `${user.name}'s membership updated to ${res.data.user.membership}`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: `Failed to update membership: ${error.response.data.message}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      });
-  };
+  // const handleMembershipUpdate = (user) => {
+  //   axiosSecure.post('/update-membership', { email: user.email })
+  //     .then((res) => {
+  //       if (res.data.success) {
+  //         refetch();
+  //         Swal.fire({
+  //           position: 'top-end',
+  //           icon: 'success',
+  //           title: `${user.name}'s membership updated to ${res.data.user.membership}`,
+  //           showConfirmButton: false,
+  //           timer: 1500,
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       Swal.fire({
+  //         position: 'top-end',
+  //         icon: 'error',
+  //         title: `Failed to update membership: ${error.response.data.message}`,
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //     });
+  // };
 
 
   const handleDeleteUser = (user) => {
@@ -135,9 +135,8 @@ const ManageUsers = () => {
                 <td>{user.email}</td>
                 <td>
                   {user.role === 'admin' ? 'Admin' : (
-                    <button onClick={() => handleMakeAdmin(user)} className="btn btn-lg bg-orange-500">
-                      <FaUsers className="text-white text-2xl" />
-                      <h1 className="text-xs -mt-5">Make Admin</h1>
+                    <button onClick={() => handleMakeAdmin(user)} className="btn btn-sm bg-[#6e6920] text-white p-2">
+                       <FaUsers className="inline" /> Make Admin
                     </button>
                   )}
                 </td>
@@ -147,14 +146,14 @@ const ManageUsers = () => {
                   </button>
                 </td>
                 <td>{user.membership || 'None'}</td>
-                <td>
+                {/* <td>
                   <button
                     onClick={() => handleMembershipUpdate(user)}
                     className="btn btn-lg bg-green-500 text-white"
                   >
                     Update Membership
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

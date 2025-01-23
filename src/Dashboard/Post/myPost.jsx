@@ -13,7 +13,7 @@ const MyPost = () => {
     const fetchPosts = async () => {
       if (user && user.email) {
         try {
-          const res = await axiosSecure.get(`http://localhost:5000/posts?email=${user.email}`);
+          const res = await axiosSecure.get(`https://y-gamma-rouge.vercel.app/posts?email=${user.email}`);
           setPosts(res.data);
         } catch (error) {
           console.error("Error fetching posts:", error);

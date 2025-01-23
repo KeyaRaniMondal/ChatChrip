@@ -18,7 +18,7 @@ const Profile = () => {
             })
             .catch(error => console.error("Error fetching user subscription:", error));
     }
-    axios.get(`http://localhost:5000/posts?email=${user.email}&userId=${user.uid}&limit=3`)
+    axios.get(`https://y-gamma-rouge.vercel.app/posts?email=${user.email}&userId=${user.uid}&limit=3`)
         .then(response => {
           console.log("API Response:", response.data);
           setPosts(Array.isArray(response.data) ? response.data : response.data.data || []);
@@ -32,7 +32,7 @@ const Profile = () => {
 
   // useEffect(() => {
   //   if (user) {
-  //     axios.get(`http://localhost:5000/posts?email=${user.email}&userId=${user.uid}&limit=3`)
+  //     axios.get(`https://y-gamma-rouge.vercel.app/posts?email=${user.email}&userId=${user.uid}&limit=3`)
   //       .then(response => {
   //         console.log("API Response:", response.data);
   //         setPosts(Array.isArray(response.data) ? response.data : response.data.data || []);

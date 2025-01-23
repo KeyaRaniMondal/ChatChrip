@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Pie } from 'react-chartjs-2';
-import axios from 'axios';
-import useAdmin from '../../../hooks/useAdmin';
+// import React, { useEffect, useState } from 'react';
+// import { Pie } from 'react-chartjs-2';
+// import axios from 'axios';
+// import useAdmin from '../../../hooks/useAdmin';
 
-const AdminHome = () => {
+// const AdminHome = () => {
 //   const [admin, setAdmin] = useState({});
 //   const [stats, setStats] = useState({});
 //   const [tags, setTags] = useState([]);
@@ -110,20 +110,83 @@ const AdminHome = () => {
         </ul>
       </div> */}
     {/* </div> */}
-    const [isAdmin, isAdminLoading] = useAdmin();
+//     const [isAdmin, isAdminLoading] = useAdmin();
 
-    if (isAdminLoading) {
+//     if (isAdminLoading) {
+//         return <p>Loading...</p>;
+//     }
+
+//     if (!isAdmin) {
+//         return <p>You are not authorized to access this page.</p>; 
+//     }
+
+//     return (
+//         <div>
+//             <h1>Welcome, Admin!</h1>
+//             <p>This is the admin dashboard where you can manage posts, users, and more.</p>
+//         </div>
+//     );
+// };
+
+// export default AdminHome;
+import React, { useEffect, useState } from 'react';
+// Assuming useAdmin hook is in the same folder
+import axios from 'axios';
+import useAdmin from '../../../hooks/useAdmin';
+
+const AdminHome = () => {
+    const [isAdmin, isAdminLoading] = useAdmin();
+    const [adminData, setAdminData] = useState(null); // To store admin details
+    const [loading, setLoading] = useState(true); // Additional loading state for admin data
+
+    useEffect(() => {
+        if (isAdmin) {
+            const fetchAdminData = async () => {
+                try {
+                    const response = await axios.get(`/admins/67892a4aab47efb8985d2145`); // Replace with your API endpoint
+                    setAdminData(response.data);
+                } catch (error) {
+                    console.error('Error fetching admin data:', error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchAdminData();
+        }
+    }, [isAdmin]);
+
+    if (isAdminLoading || loading) {
         return <p>Loading...</p>;
     }
 
     if (!isAdmin) {
-        return <p>You are not authorized to access this page.</p>; 
+        return <p>You are not authorized to access this page.</p>;
     }
 
     return (
-        <div>
-            <h1>Welcome, Admin!</h1>
-            <p>This is the admin dashboard where you can manage posts, users, and more.</p>
+        <div className="p-5">
+            <h1 className="text-2xl font-bold">Welcome, Admin!</h1>
+            {adminData ? (
+                <div className="mt-4">
+                    <img
+                        src={adminData.image || 'https://via.placeholder.com/150'} // Default image if null
+                        alt="Admin Avatar"
+                        className="w-20 h-20 rounded-full"
+                    />
+                    <p className="text-lg mt-2">
+                        <strong>Name:</strong> {adminData.username}
+                    </p>
+                    <p className="text-lg">
+                        <strong>Email:</strong> {adminData.email}
+                    </p>
+                </div>
+            ) : (
+                <p>Failed to load admin details.</p>
+            )}
+            <p className="mt-4">
+                This is the admin dashboard where you can manage posts, users, and more.
+            </p>
         </div>
     );
 };

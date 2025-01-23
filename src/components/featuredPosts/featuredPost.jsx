@@ -30,7 +30,7 @@ const FeaturedCard = ({ search }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/posts", {
+        const response = await axios.get("https://y-gamma-rouge.vercel.app/posts", {
           params: {
             search,
             tags: selectedTags.join(","),
