@@ -17,7 +17,11 @@ const {user}=useContext(AuthContext)
       const response = await axiosSecure.post(`/posts/${postId}/comments`, {
         text: commentText,
         authorEmail:user?.email,
-      });
+      },
+      {
+        withCredentials: true, 
+      }
+    );
       onCommentAdded(response.data.comment);
       setCommentText(""); 
     } catch (error) {

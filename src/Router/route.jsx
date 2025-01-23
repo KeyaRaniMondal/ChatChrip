@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
       {
         path: 'postDetail/:id',
         element: <PrivateRoute><PostDetails></PostDetails></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/posts/${params.id}`,{credentials:'include'})
       },
       {
         path: 'comments/:postId',

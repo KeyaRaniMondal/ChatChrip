@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 import Modal from "../Pages/Login/login";
 import { AuthContext } from "../Providers/AuthProvider";
@@ -11,10 +11,11 @@ const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext)
   const [showAnnouncements, setShowAnnouncements] = useState(false);
+  const navigate=useNavigate()
 
   const handleLogOut = () => {
     logOut()
-      .then(() => { })
+      .then(() => {  navigate('/')})
       .catch(error => console.log(error))
   }
   const toggleModal = () => {
