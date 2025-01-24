@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../Providers/AuthProvider";
 import bronze from '../../assets/bronze.jpg'
+import gold from '../../assets/gold.jpg'
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const Profile = () => {
         axios.get(`/users/${user.email}`)
             .then(response => {
                 setHasBronzeBadge(response.data.subscription === 'bronze');
-                setHasGoldBadge(response.data.subscription === 'gold'); // Add gold badge check
+                setHasGoldBadge(response.data.subscription === 'gold'); 
             })
             .catch(error => console.error("Error fetching user subscription:", error));
     }
@@ -28,22 +29,6 @@ const Profile = () => {
           setPosts([]);
         });
 }, [user]);
-
-
-  // useEffect(() => {
-  //   if (user) {
-  //     axios.get(`https://y-gamma-rouge.vercel.app/posts?email=${user.email}&userId=${user.uid}&limit=3`)
-  //       .then(response => {
-  //         console.log("API Response:", response.data);
-  //         setPosts(Array.isArray(response.data) ? response.data : response.data.data || []);
-  //       })
-  //       .catch(error => {
-  //         console.error("Error fetching user posts:", error);
-  //         setPosts([]);
-  //       });
-  //   }
-  // }, [user]);
-
 
   return (
     <div className="profile-page p-6">
@@ -77,31 +62,35 @@ const Profile = () => {
           )}
         </div>
       )}
-<div className="badges mt-6 text-center">
-    <h3 className="text-lg font-semibold mb-2">Badges</h3>
-    {hasBronzeBadge && <div className="badge bg-bronze text-white px-4 py-2 rounded-full">🥉 Bronze Badge</div>}
-    {hasGoldBadge && <div className="badge bg-gold text-white px-4 py-2 rounded-full">🏆 Gold Badge</div>} {/* Gold Badge */}
+
+<div className="recent-posts mt-8">
+  <h3 className="text-lg font-semibold mb-4">My Recent Posts</h3>
+  {posts.length > 5 && (
+        <div className="badges mt-6 text-center">
+          <h3 className="text-lg font-semibold mb-2">Badges</h3>
+          <img src={gold} alt="Bronze Badge" />
+        </div>
+      )}
+  {posts.length > 0 ? (
+    <>
+      
+      <ul className="space-y-4">
+        {posts.slice(0, 3).map((post, index) => (
+          <li key={index} className="p-4 border rounded-lg shadow">
+            <h4 className="text-xl font-bold">{post.posttitle}</h4>
+            <p className="text-gray-600">{post.content}</p>
+            <p className="text-sm text-gray-400 mt-2">
+              Posted on: {new Date(post.createdAt).toLocaleDateString()}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </>
+  ) : (
+    <p className="text-gray-500">You have no recent posts.</p>
+  )}
 </div>
 
-      <div className="recent-posts mt-8">
-        <h3 className="text-lg font-semibold mb-4">My Recent Posts</h3>
-        {posts.length > 0 ? (
-          <ul className="space-y-4">
-            {posts.slice(0, 3).map((post, index) => (
-              <li key={index} className="p-4 border rounded-lg shadow">
-                <h4 className="text-xl font-bold">{post.posttitle}</h4>
-                <p className="text-gray-600">{post.content}</p>
-                <p className="text-sm text-gray-400 mt-2">
-                  Posted on: {new Date(post.createdAt).toLocaleDateString()}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500">You have no recent posts.</p>
-        )}
-
-      </div>
     </div>
   );
 };

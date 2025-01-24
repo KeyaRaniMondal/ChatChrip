@@ -5,6 +5,8 @@ import { useAnnouncement } from "../hooks/announcementContext";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import useAxiosSecure from "../shared/useAxiosSecure";
+import { FaHome } from "react-icons/fa";
+import { MdCardMembership } from "react-icons/md";
 
 const Navbar = () => {
   const { announcementCount } = useAnnouncement();
@@ -41,21 +43,17 @@ const Navbar = () => {
   const links = (
     <>
       <NavLink to={"/"} className="btn btn-ghost">
-        Home
+      <FaHome className="text-xl"/> Home
       </NavLink>
       <NavLink to={"/membership"} className="btn btn-ghost">
-        Membership
+      <MdCardMembership className="text-xl"/>
+      Membership
       </NavLink>
-      <NavLink to={"/dashboard/announce"} className="btn btn-ghost">
-        Announcement
-      </NavLink>
-
-
     </>
   );
 
   return (
-    <div className="navbar bg-gradient-to-r from-[#4B5945] to-[#FFB200] mt-1">
+    <div className="navbar bg-gradient-to-r from-[#4B5945] to-[#FFB200] mt-1 lg:px-20">
       <div className="navbar-start">
         <div className="dropdown">
           <button tabIndex={0} className="btn btn-ghost lg:hidden" role="button">

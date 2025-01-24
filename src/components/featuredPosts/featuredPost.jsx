@@ -61,7 +61,7 @@ const FeaturedCard = ({ search }) => {
 
   return (
     <div className="posts-container mt-10">
-      <div className="controls mb-5 flex justify-between px-40">
+      <div className="controls mb-5 flex justify-between ml-[500px] px-40 ">
         <button
           onClick={toggleSortByPopularity}
           className=" bg-gradient-to-r from-[#726f24] to-blue-500 hover:from-pink-500 hover:to-orange-500  text-white px-4 py-2 rounded-full -ml-[450px] "
@@ -151,3 +151,6 @@ const FeaturedCard = ({ search }) => {
 };
 
 export default FeaturedCard;
+
+
+

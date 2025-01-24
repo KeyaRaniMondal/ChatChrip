@@ -38,8 +38,8 @@ const AdminHome = () => {
       {
         label: "Site Data",
         data: [users.length, posts.length, comments.length],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        backgroundColor: ["#DA498D", "#16404D", "#FFCE56"],
+        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#ECE852"],
       },
     ],
   };

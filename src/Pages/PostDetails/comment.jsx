@@ -30,7 +30,7 @@ const {user}=useContext(AuthContext)
   };
 
   return (
-    <div>
+    <div className="mb-10">
 <form onSubmit={handleAddComment} className="add-comment mt-5">
       <textarea
         value={commentText}
@@ -40,12 +40,15 @@ const {user}=useContext(AuthContext)
       ></textarea>
       <button
         type="submit"
-        className="bg-blue-500 text-white p-2 rounded mt-2"
+        className="bg-[#2222e7]  text-white p-2 rounded mt-2"
         disabled={!commentText.trim()}
       >
         Submit
       </button>
+      <button className="bg-yellow-800 p-2 rounded-full ml-5">
       <Link to={`/comments/${postId}`}>Show All Comments</Link>
+      </button>
+
     </form>
     
     </div>

@@ -43,13 +43,14 @@ const Modal = ({ isModalOpen, toggleModal }) => {
       });
   
       toggleModal();
-    } catch (error) {
-      console.error("Google Sign-In Error: ", error.message);
-      Swal.fire({
-        title: "Error",
-        text: error.message || "Something went wrong. Please try again.",
-        icon: "error",
-      });
+    } 
+    catch (error) {
+      // console.error("Google Sign-In Error: ", error.message);
+      // Swal.fire({
+      //   title: "Error",
+      //   text: error.message || "Something went wrong. Please try again.",
+      //   icon: "error",
+      // });
       toggleModal();
     }
   };
@@ -92,59 +93,121 @@ const Modal = ({ isModalOpen, toggleModal }) => {
     },
     onSubmit: async (values) => {
       try {
-        let imageUrl = null;
-        if (!isLogin && values.image) {
-          const formData = new FormData();
-          formData.append("image", values.image);
-
-          const response = await axiosPublic.post(image_hosting_api, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-
-          if (response.data.success) {
-            imageUrl = response.data.data.display_url;
-          }
-        }
-
         if (isLogin) {
-          // Login Logic
-          const user = await signIn(values.email, values.password);
+          // Login logic
+          await signIn(values.email, values.password);
           Swal.fire({
             title: "Login successful!",
             icon: "success",
             timer: 1500,
             showConfirmButton: false,
           });
-          toggleModal();
         } else {
-          // Registration Logic
-          const user = await createUser(values.email, values.password);
-          await updateUserProfile(values.username, imageUrl);
-          await axiosPublic.post("/users", {
-            username: values.username,
-            email: values.email,
-            image: imageUrl,
-          });
-
-          Swal.fire({
-            title: "Registration successful!",
-            icon: "success",
-            timer: 1500,
-            showConfirmButton: false,
-          });
-          toggleModal();
+          // Registration logic
+          try {
+            await createUser(values.email, values.password);
+            let imageUrl = null;
+    
+            if (values.image) {
+              const formData = new FormData();
+              formData.append("image", values.image);
+    
+              const response = await axiosPublic.post(image_hosting_api, formData);
+              imageUrl = response.data.data.display_url;
+            }
+    
+            await updateUserProfile(values.username, imageUrl);
+            await axiosPublic.post("/users", {
+              username: values.username,
+              email: values.email,
+              image: imageUrl,
+            });
+    
+            Swal.fire({
+              title: "Registration successful!",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          } catch (firebaseError) {
+            if (firebaseError.code === "auth/email-already-in-use") {
+              Swal.fire({
+                title: "Error",
+                text: "Email is already in use. Please log in instead.",
+                icon: "error",
+              });
+            } else {
+              throw firebaseError;
+            }
+          }
         }
+        toggleModal();
       } catch (error) {
         console.error(error);
         Swal.fire({
           title: "Error",
-          text: "Something went wrong. Please try again.",
+          text: error.message || "Something went wrong. Please try again.",
           icon: "error",
         });
+
       }
     },
+    
+    // onSubmit: async (values) => {
+    //   try {
+    //     let imageUrl = null;
+    //     if (!isLogin && values.image) {
+    //       const formData = new FormData();
+    //       formData.append("image", values.image);
+
+    //       const response = await axiosPublic.post(image_hosting_api, formData, {
+    //         headers: {
+    //           "Content-Type": "multipart/form-data",
+    //         },
+    //       });
+
+    //       if (response.data.success) {
+    //         imageUrl = response.data.data.display_url;
+    //       }
+    //     }
+
+    //     if (isLogin) {
+    //       // Login Logic
+    //       const user = await signIn(values.email, values.password);
+    //       Swal.fire({
+    //         title: "Login successful!",
+    //         icon: "success",
+    //         timer: 1500,
+    //         showConfirmButton: false,
+    //       });
+    //       toggleModal();
+    //     } else {
+    //       // Registration Logic
+    //       const user = await createUser(values.email, values.password);
+    //       await updateUserProfile(values.username, imageUrl);
+    //       await axiosPublic.post("/users", {
+    //         username: values.username,
+    //         email: values.email,
+    //         image: imageUrl,
+    //       });
+
+    //       Swal.fire({
+    //         title: "Registration successful!",
+    //         icon: "success",
+    //         timer: 1500,
+    //         showConfirmButton: false,
+    //       });
+    //       toggleModal();
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //     Swal.fire({
+    //       title: "Error",
+    //       text: "Something went wrong. Please try again.",
+    //       icon: "error",
+    //     });
+    //   }
+    // },
   });
 
 

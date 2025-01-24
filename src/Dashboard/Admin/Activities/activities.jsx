@@ -9,7 +9,7 @@ const ActivityPage = () => {
     const fetchReportedComments = async () => {
       try {
         const response = await axiosSecure.get("/reportedActivities");
-        setReportedComments(response.data); // Populate with reported comments
+        setReportedComments(response.data); 
       } catch (error) {
         console.error("Error fetching reported comments:", error);
       }
@@ -20,7 +20,7 @@ const ActivityPage = () => {
 
   return (
     <div className="container mx-auto mt-5">
-      <h1 className="text-2xl font-bold mb-4">Activity: Reported Comments</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Activity: Reported Comments</h1>
       {reportedComments.length > 0 ? (
         <table className="min-w-full bg-white border border-gray-300">
           <thead>

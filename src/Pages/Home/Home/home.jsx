@@ -6,12 +6,13 @@ import Announcement from "../../../Dashboard/Announcement/announcement";
 
 const Home = () => {
     const [search, setSearch] = useState(""); 
+
     return (
         <div>
             <Banner search={search} setSearch={setSearch}></Banner>
             <div className="flex justify-evenly">
-                <Tags></Tags>
-                <FeaturedCard  search={search}></FeaturedCard>
+                <FeaturedCard search={search}></FeaturedCard>
+                <Tags search={search}></Tags>
                 {/* <Announcement></Announcement> */}
             </div>
         </div>

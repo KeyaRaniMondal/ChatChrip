@@ -1,8 +1,12 @@
 import { FaSignsPost, FaUserPen, FaUserShield } from "react-icons/fa6";
 import Navbar from "../../components/nav";
-import { MdAdminPanelSettings, MdPostAdd } from "react-icons/md";
+import { MdAdminPanelSettings, MdMessage, MdOutlineMonetizationOn, MdPostAdd } from "react-icons/md";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../../hooks/useAdmin";
+import { FaUsers } from "react-icons/fa";
+import { RxActivityLog } from "react-icons/rx";
+import { IoIosBookmark, IoIosCreate, IoIosHelpCircle } from "react-icons/io";
+import { TfiAnnouncement } from "react-icons/tfi";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
@@ -25,22 +29,22 @@ const Dashboard = () => {
                 <>
                   <li>
                     <NavLink to="/dashboard/adminHome">
-                      <MdAdminPanelSettings /> Admin Profile
+                      <MdAdminPanelSettings className="text-2xl"/> Admin Profile
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/manageUser">
-                      <MdAdminPanelSettings /> Manage Users
+                      <FaUsers className="text-2xl"/> Manage Users
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/reportedActivities">
-                      <MdAdminPanelSettings /> Activities
+                    <RxActivityLog className="text-2xl"/> Activities
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/announcement">
-                      <MdAdminPanelSettings />Make Announcement
+                    <TfiAnnouncement className="text-2xl"/>Make Announcement
                     </NavLink>
                   </li>
                 </>
@@ -48,21 +52,37 @@ const Dashboard = () => {
                 <>
                   <li>
                     <NavLink to="/dashboard/profile">
-                      <FaUserShield /> My Profile
+                      <FaUserShield className="text-2xl"/> My Profile
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/addPost">
-                      <MdPostAdd /> Add Post
+                      <MdPostAdd className="text-2xl"/> Add Post
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="/dashboard/myPost">
-                      <FaUserPen /> My Posts
+                      <FaUserPen className="text-2xl"/> My Posts
                     </NavLink>
                   </li>
                 </>
            }  
+
+        <li className="mt-32">    <NavLink to="/.">
+        <MdMessage className="text-2xl"/>Messages
+                    </NavLink></li>
+        <li>    <NavLink to="/..">
+        <IoIosCreate className="text-2xl"/>Create Add
+                    </NavLink></li>
+        <li>    <NavLink to="/...">
+        <MdOutlineMonetizationOn className="text-2xl"/>Monetize
+                    </NavLink></li>
+        <li>    <NavLink to="/...">
+        <IoIosBookmark className="text-2xl"/>BookMarks
+                    </NavLink></li>
+        <li>    <NavLink to="/....">
+        <IoIosHelpCircle className="text-2xl"/>Help
+                    </NavLink></li>
 
           </ul>
         </div>

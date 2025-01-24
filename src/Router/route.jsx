@@ -19,6 +19,7 @@ import Announcement from "../Dashboard/Announcement/announcement";
 import Activities from "../Dashboard/Admin/Activities/activities";
 import CommentsPage from "../Pages/PostDetails/commentPage";
 import AdminRoute from "./adminRoute";
+import Error from "../Pages/error";
 
 export const router = createBrowserRouter([
   {
@@ -83,4 +84,8 @@ export const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path:'*',
+    element:<Error></Error>
+  }
 ]);

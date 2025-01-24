@@ -18,9 +18,9 @@ const options = [
   { value: "plants", label: "plants" },
   { value: "Animals", label: "Animals" },
   { value: "Music", label: "Music" },
-  { value: "Album", label: "Album" },
+  { value: "Health", label: "Health" },
   { value: "Business", label: "Business" },
-  { value: "Gamming", label: "Gamming" },
+  { value: "Gaming", label: "Gaming" },
 ];
 
 const AddPost = () => {

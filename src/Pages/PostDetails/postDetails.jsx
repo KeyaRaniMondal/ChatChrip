@@ -81,7 +81,7 @@ const PostDetails = () => {
   const shareMessage = `Check out this post by ${authorname} titled "${posttitle}"!`;
 
   return (
-    <div className="flex flex-col justify-center mx-auto w-[600px] mt-10">
+    <div className="flex flex-col justify-center mx-auto w-[600px] mt-10 ">
       <CardHeader
         avatar={
           <Avatar
