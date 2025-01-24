@@ -1,194 +1,142 @@
-// import React, { useEffect, useState } from 'react';
-// import { Pie } from 'react-chartjs-2';
-// import axios from 'axios';
-// import useAdmin from '../../../hooks/useAdmin';
+import React, { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import { axiosSecure } from "../../../shared/useAxiosSecure";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-// const AdminHome = () => {
-//   const [admin, setAdmin] = useState({});
-//   const [stats, setStats] = useState({});
-//   const [tags, setTags] = useState([]);
-//   const [newTag, setNewTag] = useState("");
-
-//   useEffect(() => {
-//     const fetchAdminStats = async () => {
-//       try {
-//         const response = await axios.get('/admin/stats');
-//         setAdmin(response.data.admin);
-//         setStats(response.data.stats);
-//       } catch (error) {
-//         console.error('Error fetching admin stats:', error);
-//       }
-//     };
-
-//     const fetchTags = async () => {
-//       try {
-//         const response = await axios.get('/tags');
-//         setTags(response.data);
-//       } catch (error) {
-//         console.error('Error fetching tags:', error);
-//       }
-//     };
-
-//     fetchAdminStats();
-//     fetchTags();
-//   }, []);
-
-//   const handleAddTag = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post('/tags', { tagName: newTag });
-//       setTags((prev) => [...prev, response.data.tag]);
-//       setNewTag("");
-//     } catch (error) {
-//       console.error('Error adding tag:', error);
-//     }
-//   };
-
-  // return (
-  //   <div className="container mx-auto mt-5">
-      {/* Admin Profile Section */}
-      {/* <div className="flex items-center mb-10">
-        <img src={admin.image || '/placeholder.jpg'} alt="Admin" className="w-24 h-24 rounded-full mr-5" /> 
-        <div> 
-          <h1 className="text-2xl font-bold">{admin.name}</h1>
-          <p>Email: {admin.email}</p>
-          <p>Number of Posts: {admin.posts}</p>
-          <p>Number of Comments: {admin.comments}</p>
-        </div>
-      </div> */}
-
-      {/* Pie Chart */}
-      {/* <div className="mb-10">
-        <h2 className="text-xl font-bold mb-4">Site Statistics</h2>
-        {stats.totalPosts && (
-          <Pie
-            data={{
-              labels: ['Posts', 'Comments', 'Users'],
-              datasets: [
-                {
-                  data: [stats.totalPosts, stats.totalComments, stats.totalUsers],
-                  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                },
-              ],
-            }}
-            options={{
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'bottom',
-                },
-              },
-            }}
-          />
-        )} 
-      </div> */}
-
-      {/* Add Tags Form */}
-      {/* <div className="mb-10">
-        <h2 className="text-xl font-bold mb-4">Add Tags</h2>
-        <form onSubmit={handleAddTag} className="flex items-center">
-          <input
-            type="text"
-            value={newTag}
-            onChange={(e) => setNewTag(e.target.value)}
-            placeholder="Enter tag name"
-            className="border rounded px-4 py-2 mr-2"
-          />
-          <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
-            Add Tag
-          </button>
-        </form>
-      </div> */}
-
-      {/* Tags List */}
-      {/* <div>
-        <h2 className="text-xl font-bold mb-4">Existing Tags</h2>
-        <ul>
-           {tags.map((tag) => (
-            <li key={tag._id} className="border-b py-2">{tag.tagName}</li>
-          ))} 
-        </ul>
-      </div> */}
-    {/* </div> */}
-//     const [isAdmin, isAdminLoading] = useAdmin();
-
-//     if (isAdminLoading) {
-//         return <p>Loading...</p>;
-//     }
-
-//     if (!isAdmin) {
-//         return <p>You are not authorized to access this page.</p>; 
-//     }
-
-//     return (
-//         <div>
-//             <h1>Welcome, Admin!</h1>
-//             <p>This is the admin dashboard where you can manage posts, users, and more.</p>
-//         </div>
-//     );
-// };
-
-// export default AdminHome;
-import React, { useEffect, useState } from 'react';
-// Assuming useAdmin hook is in the same folder
-import axios from 'axios';
-import useAdmin from '../../../hooks/useAdmin';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const AdminHome = () => {
-    const [isAdmin, isAdminLoading] = useAdmin();
-    const [adminData, setAdminData] = useState(null); // To store admin details
-    const [loading, setLoading] = useState(true); // Additional loading state for admin data
+  const { user } = useContext(AuthContext);
+  const { data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users");
+      return res.data;
+    },
+  });
 
-    useEffect(() => {
-        if (isAdmin) {
-            const fetchAdminData = async () => {
-                try {
-                    const response = await axios.get(`/admins/67892a4aab47efb8985d2145`); // Replace with your API endpoint
-                    setAdminData(response.data);
-                } catch (error) {
-                    console.error('Error fetching admin data:', error);
-                } finally {
-                    setLoading(false);
-                }
-            };
+  const { data: posts = [] } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/posts");
+      return res.data;
+    },
+  });
 
-            fetchAdminData();
-        }
-    }, [isAdmin]);
+  const { data: comments = [] } = useQuery({
+    queryKey: ["comments"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/comments");
+      return res.data;
+    },
+  });
+  const pieData = {
+    labels: ["Users", "Posts", "Comments"],
+    datasets: [
+      {
+        label: "Site Data",
+        data: [users.length, posts.length, comments.length],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+      },
+    ],
+  };
 
-    if (isAdminLoading || loading) {
-        return <p>Loading...</p>;
-    }
+  return (
+    <div className="p-5">
+      <h1 className="text-2xl font-bold text-center mt-10">Welcome, Admin!</h1>
+      <p className="mt-4 text-center mb-10">
+        This is the admin dashboard where you can manage posts, users, and
+        more.
+      </p>
+      <div className="mt-4">
 
-    if (!isAdmin) {
-        return <p>You are not authorized to access this page.</p>;
-    }
-
-    return (
-        <div className="p-5">
-            <h1 className="text-2xl font-bold">Welcome, Admin!</h1>
-            {adminData ? (
-                <div className="mt-4">
-                    <img
-                        src={adminData.image || 'https://via.placeholder.com/150'} // Default image if null
-                        alt="Admin Avatar"
-                        className="w-20 h-20 rounded-full"
-                    />
-                    <p className="text-lg mt-2">
-                        <strong>Name:</strong> {adminData.username}
-                    </p>
-                    <p className="text-lg">
-                        <strong>Email:</strong> {adminData.email}
-                    </p>
+        {/* stats */}
+        <div className="stats shadow">
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <div className="avatar online">
+                <div className="w-16 rounded-full">
+                  <img
+                    src={user.photoURL || "https://via.placeholder.com/150"}
+                    alt="Admin Avatar"
+                    className="w-20 h-20 rounded-full"
+                  />
                 </div>
-            ) : (
-                <p>Failed to load admin details.</p>
-            )}
-            <p className="mt-4">
-                This is the admin dashboard where you can manage posts, users, and more.
-            </p>
+              </div>
+            </div>
+            <div className="stat-value"> {user.displayName}</div>
+            <div className="stat-desc text-secondary"> {user.email}</div>
+          </div>
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block h-8 w-8 stroke-current">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div className="stat-title">Total Comments:</div>
+            <div className="stat-value">{comments.length}</div>
+            <div className="stat-desc">Jan 1st - Feb 1st</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block h-8 w-8 stroke-current">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+              </svg>
+            </div>
+            <div className="stat-title">Total Users:</div>
+            <div className="stat-value">{users.length}</div>
+            <div className="stat-desc">↗︎ 400 (22%)</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block h-8 w-8 stroke-current">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+              </svg>
+            </div>
+            <div className="stat-title">Total Posts:</div>
+            <div className="stat-value">{posts.length}</div>
+            <div className="stat-desc">↘︎ 90 (14%)</div>
+          </div>
         </div>
-    );
+      </div>
+      {/* Pie Chart */}
+      <h2 className="text-xl font-bold text-center mt-20">Forum Statistics</h2>
+      <div className="mt-10 w-80 flex justify-center mx-auto">
+        <Pie data={pieData} />
+      </div>
+    </div>
+  );
 };
 
 export default AdminHome;
+
+
