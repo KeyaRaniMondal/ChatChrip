@@ -4,7 +4,6 @@ import useAxiosSecure from "../../shared/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
-import Navbar from "../../components/nav";
 
 const Announcement = () => {
   const { user } = useContext(AuthContext);
@@ -18,7 +17,7 @@ const Announcement = () => {
       try {
         const response = await axiosSecure.get("/announcements");
         setAnnouncements(response.data);
-        setAnnouncementCount(response.data.length); // Update count
+        setAnnouncementCount(response.data.length); 
       } catch (error) {
         console.error("Error fetching announcements:", error);
       }
@@ -52,7 +51,7 @@ const Announcement = () => {
       });
 
       setAnnouncements([...announcements, response.data]);
-      setAnnouncementCount(setAnnouncementCount  + 1); // Update count
+      setAnnouncementCount(setAnnouncementCount  + 1); 
     } catch (error) {
       console.error("Error creating announcement:", error);
       Swal.fire({
@@ -134,7 +133,7 @@ const Announcement = () => {
               </div>
             ) : (
               <div className="text-center">
-                <h2 className="text-2xl font-bold mb-4">No Announcements Yet</h2>
+                <h2 className="text-2xl font-bold mb-4">Create Announcements Here !!</h2>
                 <p>Be the first to create an announcement!</p>
               </div>
             )}
@@ -145,3 +144,4 @@ const Announcement = () => {
   );
 };
 export default Announcement;
+

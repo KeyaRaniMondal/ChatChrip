@@ -27,3 +27,4 @@ export const AnnouncementProvider = ({ children }) => {
 };
 
 export const useAnnouncement = () => useContext(AnnouncementContext);
+
