@@ -17,6 +17,8 @@ const options = [
   { value: "physics", label: "physics" },
   { value: "plants", label: "plants" },
   { value: "Animals", label: "Animals" },
+  { value: "Music", label: "Music" },
+  { value: "Album", label: "Album" },
   { value: "Business", label: "Business" },
   { value: "Gamming", label: "Gamming" },
 ];
