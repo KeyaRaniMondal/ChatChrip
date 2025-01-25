@@ -29,3 +29,8 @@ and many more
 6. react icons
 7. react select
 8. react share
+
+# Reported Activities Feature for Admins :
+1. Member Removal: If a user violates group rules, the admin can remove them from the group.
+2. Edit/Delete Posts: Admins can edit or delete any post if it violates the group’s rules or is deemed inappropriate.
+3. Report Management: Members can report posts or comments, and admins can view and take appropriate action (e.g., delete the content or warn the user).

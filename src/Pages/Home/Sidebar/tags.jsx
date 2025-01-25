@@ -15,7 +15,7 @@ const Tags = ({ setSearch }) => {
       <ul className="steps steps-vertical">
         <li className="btn bg-black text-white" onClick={() => handleTagClick("Programming")}> Programming</li>
         <li className="btn bg-black text-white" onClick={() => handleTagClick("Languages")}> Languages</li>
-        <li className="btn bg-black text-white" onClick={() => handleTagClick("Gaming")}> Gaming</li>
+        <li className="btn bg-black text-white" onClick={() => handleTagClick("Game")}> Game</li>
         <li className="btn bg-black text-white" onClick={() => handleTagClick("Business")}> Business</li>
         <li className="btn bg-black text-white" onClick={() => handleTagClick("Animals")}> Animals</li>
         <li className="btn bg-black text-white" onClick={() => handleTagClick("Books")}> Books</li>

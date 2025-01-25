@@ -20,7 +20,7 @@ const options = [
   { value: "Music", label: "Music" },
   { value: "Health", label: "Health" },
   { value: "Business", label: "Business" },
-  { value: "Gaming", label: "Gaming" },
+  { value: "Game", label: "Game" },
 ];
 
 const AddPost = () => {
