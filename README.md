@@ -1,5 +1,8 @@
 # project name: ChatChrip
 
+ChatChrip is a social platform that makes it easy for people around the world to connect, share their thoughts, and exchange knowledge. Users can post about their favorite topics, interact through comments, vote on posts, manage profiles, and even participate in a secure payment system. Admins have special privileges, including managing users and promoting members to admin status.
+<img class="screenshot" src="https://github.com/user-attachments/assets/56f73d40-d755-47a7-997e-fb264f55fed3" alt="Chatchrip Forum Screenshot">
+
 # live URL:
 - https://forum-client-c31be.web.app/
 - https://forum-client-c31be.firebaseapp.com/
