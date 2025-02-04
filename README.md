@@ -4,7 +4,29 @@ ChatChrip is a social platform that makes it easy for people around the world to
 
 <img class="screenshot" src="https://github.com/user-attachments/assets/25e59fff-6882-4d94-9238-f2eac1cb4a5a" alt="Chatchrip Forum Screenshot">
 
+This project is built with modern web technologies:
 
+⚛️ React – Frontend framework for building UI components.
+🏃 Motion (Framer Motion) – Animation library for smooth transitions.
+🎨 React Icons – Collection of icons for UI elements.
+📊 React Chart – Data visualization for analytics.
+⚡ TanStack Query (React Query) – Managing API requests efficiently.
+🚀 Formik – Form handling and validation.
+🔔 SweetAlert – Elegant popups and alerts.
+🔽 React Select – Customizable dropdowns.
+🔄 React Share – Social media sharing integration.
+
+
+🚀 Features
+🌎 Global Connection – Share thoughts and knowledge with everyone.
+📝 Create & Manage Posts – Users can create, edit, and delete their own posts.
+💬 Comment System – Engage with posts by commenting.
+👍 Voting System – Rate posts with an upvote/downvote system.
+👤 User Profiles – Manage personal information and activity.
+💳 Payment System – Secure transactions for premium features.
+🏷 Tag-Based Search – Find posts using relevant tags.
+🛠️ Admin Controls – Admins can manage users, posts, and promote members.
+🔄 User-to-Admin Conversion – Special feature for converting users into admins.
 # live URL:
 - https://forum-client-c31be.web.app/
 - https://forum-client-c31be.firebaseapp.com/
