@@ -7,6 +7,9 @@ import { AuthContext } from "../Providers/AuthProvider";
 import useAxiosSecure from "../shared/useAxiosSecure";
 import { FaHome } from "react-icons/fa";
 import { MdCardMembership } from "react-icons/md";
+import { FaFileCircleQuestion } from "react-icons/fa6";
+import { TbLogs } from "react-icons/tb";
+import { SiAnswer } from "react-icons/si";
 
 const Navbar = () => {
   const { announcementCount } = useAnnouncement();
@@ -49,11 +52,23 @@ const Navbar = () => {
       <MdCardMembership className="text-xl"/>
       Membership
       </NavLink>
+      <NavLink to={"/membership"} className="btn btn-ghost">
+      <FaFileCircleQuestion className="text-xl"/>
+      Ask Questions
+      </NavLink>
+      <NavLink to={"/membership"} className="btn btn-ghost">
+      <TbLogs className="text-xl"/>
+      Blogs
+      </NavLink>
+      <NavLink to={"/membership"} className="btn btn-ghost">
+      <SiAnswer className="text-xl"/>
+      Answer Questions
+      </NavLink>
     </>
   );
 
   return (
-    <div className="navbar bg-gradient-to-r from-[#4B5945] to-[#FFB200] mt-1 lg:px-20">
+    <div className="navbar fixed mt-0 bg-gradient-to-r from-[#4B5945] to-[#FFB200] lg:px-20">
       <div className="navbar-start">
         <div className="dropdown">
           <button tabIndex={0} className="btn btn-ghost lg:hidden" role="button">
@@ -79,10 +94,10 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <div className="flex items-center">
-          <img src={logo} alt="Logo" className="w-14 h-16 -mt-2 ml-5" />
-          <span className="btn btn-ghost text-lg -ml-4">ChatChirp</span>
-        </div>
+        {/* <div className="flex items-center">
+          <img src={logo} alt="Logo" className="w-14 h-16 -mt-2 ml-5" /> */}
+           <span className="btn btn-ghost text-lg -ml-4">ChatChirp</span>
+        {/* </div> */}
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal gap-5 text-lg">
