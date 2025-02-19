@@ -11,7 +11,7 @@ import { TfiAnnouncement } from "react-icons/tfi";
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
   return (
-    <div>
+    <div className="mt-20">
       <Navbar></Navbar>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

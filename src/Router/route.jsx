@@ -20,6 +20,8 @@ import Activities from "../Dashboard/Admin/Activities/activities";
 import CommentsPage from "../Pages/PostDetails/commentPage";
 import AdminRoute from "./adminRoute";
 import Error from "../Pages/error";
+import ProfileOverview from "../Dashboard/Profile/profileOverview";
+import AskQuestions from "../Pages/Question/question";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: 'postCreation',
         element: <PrivateRoute><CreatePost></CreatePost></PrivateRoute>
+      },
+      {
+        path: 'question',
+        element: <PrivateRoute><AskQuestions></AskQuestions></PrivateRoute>
       },
       {
         path: 'membership',
@@ -61,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile',
         element: <PrivateRoute><Profile></Profile></PrivateRoute>
+      },
+      {
+        path: 'profileOverview',
+        element: <PrivateRoute><ProfileOverview></ProfileOverview></PrivateRoute>
       },
       {
         path: 'myPost',

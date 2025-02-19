@@ -1,15 +1,16 @@
-import logo from "../assets/logo.jpg";
 import Modal from "../Pages/Login/login";
 import { useContext, useEffect, useState } from "react";
 import { useAnnouncement } from "../hooks/announcementContext";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 import useAxiosSecure from "../shared/useAxiosSecure";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaToggleOn } from "react-icons/fa";
 import { MdCardMembership } from "react-icons/md";
 import { FaFileCircleQuestion } from "react-icons/fa6";
 import { TbLogs } from "react-icons/tb";
 import { SiAnswer } from "react-icons/si";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { DarkModeToggle } from "./ThemeProvider";
 
 const Navbar = () => {
   const { announcementCount } = useAnnouncement();
@@ -29,6 +30,7 @@ const Navbar = () => {
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
+
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
@@ -52,7 +54,7 @@ const Navbar = () => {
       <MdCardMembership className="text-xl"/>
       Membership
       </NavLink>
-      <NavLink to={"/membership"} className="btn btn-ghost">
+      <NavLink to={"/question"} className="btn btn-ghost">
       <FaFileCircleQuestion className="text-xl"/>
       Ask Questions
       </NavLink>
@@ -68,7 +70,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar fixed mt-0 bg-gradient-to-r from-[#4B5945] to-[#FFB200] lg:px-20">
+    <div className="navbar fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#4B5945] to-[#FFB200] lg:px-20">
       <div className="navbar-start">
         <div className="dropdown">
           <button tabIndex={0} className="btn btn-ghost lg:hidden" role="button">
@@ -106,6 +108,7 @@ const Navbar = () => {
       </div>
       <Modal isModalOpen={isModalOpen} toggleModal={toggleModal} />
       <div className="navbar-end">
+      <DarkModeToggle />
         <button
           className="btn btn-ghost btn-circle"
           onClick={() => setShowAnnouncements(!showAnnouncements)}

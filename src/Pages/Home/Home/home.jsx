@@ -1,7 +1,6 @@
 import { useState } from "react";
 import FeaturedCard from "../../../components/featuredPosts/featuredPost"
 import Banner from "../Banner/banner"
-import Tags from "../Sidebar/tags"
 
 const Home = () => {
     const [search, setSearch] = useState(""); 
