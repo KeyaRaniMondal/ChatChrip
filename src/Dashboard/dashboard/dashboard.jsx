@@ -56,6 +56,11 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                   <li>
+                    <NavLink to="/dashboard/profileOverview">
+                      <FaUserShield className="text-2xl"/>Profile Overview
+                    </NavLink>
+                  </li>
+                  <li>
                     <NavLink to="/dashboard/addPost">
                       <MdPostAdd className="text-2xl"/> Add Post
                     </NavLink>
