@@ -49,7 +49,7 @@ const CommentsPage = () => {
   };
 
   return (
-    <div className="container mx-auto mt-5">
+    <div className="container mx-auto mt-32">
       <h1 className="text-2xl font-bold mb-4">Comments for Post {postId}</h1>
       <table className="min-w-full bg-white border border-gray-300">
         <thead>

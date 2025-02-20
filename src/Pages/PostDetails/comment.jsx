@@ -40,12 +40,12 @@ const {user}=useContext(AuthContext)
       ></textarea>
       <button
         type="submit"
-        className="bg-[#2222e7]  text-white p-2 rounded mt-2"
+        className="btn btn-outline bg-white p-2 rounded mt-2"
         disabled={!commentText.trim()}
       >
         Submit
       </button>
-      <button className="bg-yellow-800 p-2 rounded-full ml-5">
+      <button className="btn btn-outline bg-white p-2 rounded-full ml-5">
       <Link to={`/comments/${postId}`}>Show All Comments</Link>
       </button>
 
