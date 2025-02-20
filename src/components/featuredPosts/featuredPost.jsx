@@ -61,10 +61,10 @@ const FeaturedCard = ({ search }) => {
 
   return (
     <div className="posts-container mt-10 items-center mx-auto w-full max-w-5xl px-4">
-      <div className="controls flex justify-end ml-[500px] px-40 mb-10">
+      <div className="controls flex justify-end lg:ml-[500px] px-40 mb-10">
         <button
           onClick={toggleSortByPopularity}
-          className=" bg-gradient-to-r from-[#726f24] to-blue-500 hover:from-pink-500 hover:to-orange-500  text-white px-4 py-2 rounded-full -ml-[450px] "
+          className=" bg-gradient-to-r from-[#726f24] to-blue-500 hover:from-pink-500 hover:to-orange-500  text-white text-xs w-32 lg:px-4 py-2 lg:w-40 lg:text-md rounded-full lg:-ml-[450px] "
         >
          <IoSparkles className="w-40 "/> {sortByPopularity ? " Sort by Newest": "Sort by Popularity"}
         </button>

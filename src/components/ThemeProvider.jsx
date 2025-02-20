@@ -44,9 +44,9 @@ export const DarkModeToggle = () => {
       className="text-3xl p-2 transition-all"
     >
       {toggleDark ? (
-        <FaToggleOn className="text-blue-500" />
+        <FaToggleOn className="text-black" />
       ) : (
-        <FaToggleOff className="text-gray-500" />
+        <FaToggleOff className="text-black" />
       )}
     </button>
   );
