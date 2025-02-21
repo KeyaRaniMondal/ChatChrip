@@ -22,6 +22,7 @@ import AdminRoute from "./adminRoute";
 import Error from "../Pages/error";
 import ProfileOverview from "../Dashboard/Profile/profileOverview";
 import AskQuestions from "../Pages/Question/question";
+import Blogs from "../Pages/blogs";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: 'question',
         element: <PrivateRoute><AskQuestions></AskQuestions></PrivateRoute>
+      },
+      {
+        path: 'blogs',
+        element: <Blogs></Blogs>
       },
       {
         path: 'membership',

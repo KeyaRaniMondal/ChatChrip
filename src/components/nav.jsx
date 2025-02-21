@@ -58,7 +58,7 @@ const Navbar = () => {
       <FaFileCircleQuestion className="text-xl"/>
       Ask Questions
       </NavLink>
-      <NavLink to={"/membership"} className="btn btn-ghost">
+      <NavLink to={"/blogs"} className="btn btn-ghost">
       <TbLogs className="text-xl"/>
       Blogs
       </NavLink>

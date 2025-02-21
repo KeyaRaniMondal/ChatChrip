@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+
+
+
+
+
+
+
+
+.blog-post {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .blog-post h3 {
+    margin-top: 0;
+  }
+  
+  .blog-meta {
+    font-size: 0.8em;
+    color: #777;
+  }
+  
+  .blog-post hr {
+      margin-top: 15px;
+      border: 0;
+      border-top: 1px solid #eee;
+  }

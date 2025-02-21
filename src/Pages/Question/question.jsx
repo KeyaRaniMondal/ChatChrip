@@ -6,7 +6,7 @@ const AskQuestions = ({ search, setSearch }) => {
     const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
-        axios.get("https://y-gamma-rouge.vercel.app/questions")
+        axios.get("https://y-gamma-rouge.vercel.app/aquestions")
             .then(response => setQuestions(response.data))
             .catch(error => console.error("Error fetching questions:", error));
     }, []);
@@ -15,7 +15,7 @@ const AskQuestions = ({ search, setSearch }) => {
         if (!question.trim()) return;
 
         try {
-            const response = await axios.post("https://y-gamma-rouge.vercel.app/questions", {
+            const response = await axios.post("https://y-gamma-rouge.vercel.app/aquestions", {
                 text: question,
             });
 
