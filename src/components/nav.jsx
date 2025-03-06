@@ -10,6 +10,7 @@ import { FaFileCircleQuestion } from "react-icons/fa6";
 import { TbLogs } from "react-icons/tb";
 import { SiAnswer } from "react-icons/si";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { LuBrainCircuit } from "react-icons/lu";
 import { DarkModeToggle } from "./ThemeProvider";
 
 const Navbar = () => {
@@ -48,23 +49,27 @@ const Navbar = () => {
   const links = (
     <>
       <NavLink to={"/"} className="btn btn-ghost">
-      <FaHome className="text-xl"/> Home
+        <FaHome className="text-xl" /><span className="-ml-9 mt-8">Home</span>
       </NavLink>
       <NavLink to={"/membership"} className="btn btn-ghost">
-      <MdCardMembership className="text-xl"/>
-      Membership
+        <MdCardMembership className="text-xl" />
+        <span className="-ml-12 mt-8">Membership</span>
       </NavLink>
       <NavLink to={"/question"} className="btn btn-ghost">
-      <FaFileCircleQuestion className="text-xl"/>
-      Ask Questions
+        <FaFileCircleQuestion className="text-xl" />
+        <span className="-ml-12 mt-8">Ask Questions</span>
       </NavLink>
       <NavLink to={"/blogs"} className="btn btn-ghost">
-      <TbLogs className="text-xl"/>
-      Blogs
+        <TbLogs className="text-xl" />
+        <span className="-ml-9 mt-8">Blogs</span>
       </NavLink>
-      <NavLink to={"/membership"} className="btn btn-ghost">
-      <SiAnswer className="text-xl"/>
-      Answer Questions
+      <NavLink to={"/answer"} className="btn btn-ghost">
+        <SiAnswer className="text-xl" />
+        <span className="-ml-12 mt-8">Answer Questions</span>
+      </NavLink>
+      <NavLink to={"/chatAi"} className="btn btn-ghost">
+        <LuBrainCircuit className="text-xl font-bold" />
+        <span className="-ml-12 mt-8 font-bold">ChatChripAI</span>
       </NavLink>
     </>
   );
@@ -98,7 +103,7 @@ const Navbar = () => {
         </div>
         {/* <div className="flex items-center">
           <img src={logo} alt="Logo" className="w-14 h-16 -mt-2 ml-5" /> */}
-           <span className="btn btn-ghost text-lg -ml-4">ChatChirp</span>
+        <span className="btn btn-ghost text-lg -ml-4">ChatChirp</span>
         {/* </div> */}
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -108,7 +113,7 @@ const Navbar = () => {
       </div>
       <Modal isModalOpen={isModalOpen} toggleModal={toggleModal} />
       <div className="navbar-end">
-      <DarkModeToggle />
+        <DarkModeToggle />
         <button
           className="btn btn-ghost btn-circle"
           onClick={() => setShowAnnouncements(!showAnnouncements)}

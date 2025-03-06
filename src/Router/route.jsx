@@ -23,6 +23,8 @@ import Error from "../Pages/error";
 import ProfileOverview from "../Dashboard/Profile/profileOverview";
 import AskQuestions from "../Pages/Question/question";
 import Blogs from "../Pages/blogs";
+import Answer from "../Pages/Question/answer";
+import ChatAI from "../Pages/AI/chatAI";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ export const router = createBrowserRouter([
       {
         path: 'question',
         element: <PrivateRoute><AskQuestions></AskQuestions></PrivateRoute>
+      },
+      {
+        path: 'answer',
+        element: <PrivateRoute><Answer></Answer></PrivateRoute>
+      },
+      {
+        path: 'chatAi',
+        element: <PrivateRoute><ChatAI></ChatAI></PrivateRoute>
       },
       {
         path: 'blogs',
