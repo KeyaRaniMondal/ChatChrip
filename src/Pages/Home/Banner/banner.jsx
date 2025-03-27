@@ -4,7 +4,7 @@ const Banner = ({ search, setSearch }) => {
   return (
     <div
       className="w-full h-[40vw] min-h-[150px] md:min-h-[250px] bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: `url(${banner})` }}
+      // style={{ backgroundImage: `url(${banner})` }}
     >
       <div className="text-center">
         <section className="w-full px-4">

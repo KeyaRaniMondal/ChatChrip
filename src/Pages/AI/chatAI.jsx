@@ -8,14 +8,17 @@ const ChatAI = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!prompt)
+        if (!prompt.trim())
             return
         setLoading(true)
         setResponse("")
 
         try {
-            const res = await axios.get(`https://y-gamma-rouge.vercel.app/chatApi/textAi`, {
-                params: { prompt }
+            const res = await axios.get(`https://y-gamma-rouge.vercel.app/chatApi/textAi`,{ prompt },
+            {
+                headers:{
+                    "Content-Type":"application/json"
+                }
             })
             setResponse(res.data.answer)
         }
