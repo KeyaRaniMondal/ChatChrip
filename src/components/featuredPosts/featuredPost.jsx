@@ -9,7 +9,7 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Pagination from "@mui/material/Pagination"; 
+import Pagination from "@mui/material/Pagination";
 import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import { BiDownvote, BiSolidUpvote } from "react-icons/bi";
@@ -17,14 +17,15 @@ import { FaCommentDots } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoSparkles } from "react-icons/io5";
 import { IoIosShareAlt } from "react-icons/io";
+import LatestPosts from "./latestPost";
 
 const FeaturedCard = ({ search }) => {
   const [posts, setPosts] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const [sortByPopularity, setSortByPopularity] = useState(false);
-  const [page, setPage] = useState(1); 
-  const postsPerPage = 5; 
+  const [page, setPage] = useState(1);
+  const postsPerPage = 5;
 
   // Fetch posts
   useEffect(() => {
@@ -34,7 +35,7 @@ const FeaturedCard = ({ search }) => {
           params: {
             search,
             tags: selectedTags.join(","),
-            sortByPopularity, 
+            sortByPopularity,
           },
         });
         setPosts(response.data);
@@ -61,12 +62,12 @@ const FeaturedCard = ({ search }) => {
 
   return (
     <div className="posts-container mt-10 items-center mx-auto w-full max-w-5xl px-4">
-      <div className="controls flex justify-end lg:ml-[500px] px-40 mb-10">
+      <div className="lg:-mt-[183px] controls flex justify-end lg:ml-[1000px] px-40 mb-20">
         <button
           onClick={toggleSortByPopularity}
           className=" bg-gradient-to-r from-[#726f24] to-blue-500 hover:from-pink-500 hover:to-orange-500  text-white text-xs w-32 lg:px-4 py-2 lg:w-40 lg:text-md rounded-full lg:-ml-[450px] "
         >
-         <IoSparkles className="w-40 "/> {sortByPopularity ? " Sort by Newest": "Sort by Popularity"}
+          <IoSparkles className="w-40 " /> {sortByPopularity ? " Sort by Newest" : "Sort by Popularity"}
         </button>
       </div>
 
@@ -74,7 +75,7 @@ const FeaturedCard = ({ search }) => {
         <Link key={post._id} to={`/postDetail/${post._id}`}>
           <Card sx={{ maxWidth: 700 }} className="ml-40 mb-5 ">
             <CardHeader
-              
+
               avatar={
                 <Avatar sx={{ bgcolor: red }} aria-label="recipe">
                   {post.authoremail.charAt(0).toUpperCase()}
@@ -82,12 +83,12 @@ const FeaturedCard = ({ search }) => {
               }
               title={post.posttitle}
               // subheader={post.authoremail}
-              subheader={new Date(post.createdAt).toLocaleString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric', 
-                hour: '2-digit', 
-                minute: '2-digit' 
+              subheader={new Date(post.createdAt).toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
               })}
             />
             <CardMedia
@@ -105,9 +106,8 @@ const FeaturedCard = ({ search }) => {
                       e.stopPropagation();
                       handleTagSelect(tag);
                     }}
-                    className={`${
-                      selectedTags.includes(tag) ? "bg-green-500" : "bg-black"
-                    } text-white rounded-full px-4 py-2 m-1`}
+                    className={`${selectedTags.includes(tag) ? "bg-green-500" : "bg-black"
+                      } text-white rounded-full px-4 py-2 m-1`}
                   >
                     {tag}
                   </button>
@@ -130,7 +130,7 @@ const FeaturedCard = ({ search }) => {
                 <FaCommentDots />
               </IconButton>
               <IconButton aria-label="share">
-              <IoIosShareAlt/>
+                <IoIosShareAlt />
               </IconButton>
             </CardActions>
           </Card>

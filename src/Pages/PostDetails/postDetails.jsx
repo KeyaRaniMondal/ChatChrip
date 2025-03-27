@@ -62,17 +62,17 @@ const PostDetails = () => {
       <CardActions disableSpacing className="bg-[#7E99A3] ">
         <VoteSystem postId={_id} upvote={upvote} downvote={downvote} />
         <div className="flex justify-end  mr-3 ml-5">
-        <WhatsappShareButton url={shareUrl} title={shareMessage}>
-          <WhatsappIcon size={40} round={true} />
-        </WhatsappShareButton>
-      </div>
-      <div className="flex justify-end ">
-        <FacebookShareButton url={shareUrl} title={shareMessage}>
-          <FacebookIcon size={40} round={true} />
-        </FacebookShareButton>
-      </div>
+          <WhatsappShareButton url={shareUrl} title={shareMessage}>
+            <WhatsappIcon size={40} round={true} />
+          </WhatsappShareButton>
+        </div>
+        <div className="flex justify-end ">
+          <FacebookShareButton url={shareUrl} title={shareMessage}>
+            <FacebookIcon size={40} round={true} />
+          </FacebookShareButton>
+        </div>
       </CardActions>
-      
+
 
       <Comment postId={_id} onCommentAdded={handleCommentAdded} />
     </div>
