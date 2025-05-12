@@ -7,7 +7,8 @@ import { CardActions, CardContent } from "@mui/material";
 import { red } from "@mui/material/colors";
 import VoteSystem from "./voteSystem";
 import Comment from "./comment";
-import { FacebookIcon, FacebookShareButton, WhatsappIcon, WhatsappShareButton } from "react-share";
+import { FacebookIcon, FacebookShareButton,  TwitterIcon,  TwitterShareButton,  WhatsappIcon, WhatsappShareButton } from "react-share";
+import { BiLogoDiscord, BiLogoDiscordAlt } from "react-icons/bi";
 
 const PostDetails = () => {
   const [comments, setComments] = useState([]);
@@ -30,7 +31,7 @@ const PostDetails = () => {
     downvote,
   } = post;
 
-  const shareUrl = `${window.location.origin}/posts/${_id}`;
+  const shareUrl = `https://forum-client-c31be.web.app/posts/${_id}`;
   const shareMessage = `Check out this post by ${authorname} titled "${posttitle}"!`;
 
   return (
@@ -46,20 +47,20 @@ const PostDetails = () => {
         title={authorname}
         subheader={authoremail}
       />
-      <h2 className="text-xl font-bold text-center mb-5">{posttitle}</h2>
+      <h2 className="text-xl font-bold text-left mb-5">{posttitle}</h2>
       <img src={image} alt={posttitle} />
       <div className="my-2">
         {tags.map((tag, index) => (
           <button
             key={index}
-            className="bg-slate-400 text-white rounded-full px-4 py-2 m-1"
+            className="border border-black rounded-full px-4 py-2 m-1"
           >
             {tag}
           </button>
         ))}
       </div>
       <p>{postdescription}</p>
-      <CardActions disableSpacing className="bg-[#7E99A3] ">
+      <CardActions disableSpacing className="border border-black mt-5">
         <VoteSystem postId={_id} upvote={upvote} downvote={downvote} />
         <div className="flex justify-end  mr-3 ml-5">
           <WhatsappShareButton url={shareUrl} title={shareMessage}>
@@ -71,6 +72,12 @@ const PostDetails = () => {
             <FacebookIcon size={40} round={true} />
           </FacebookShareButton>
         </div>
+        <TwitterShareButton url={shareUrl} title={shareMessage}>
+          <TwitterIcon size={40} round={true}></TwitterIcon>
+        </TwitterShareButton>
+        <BiLogoDiscord>
+          <BiLogoDiscordAlt></BiLogoDiscordAlt>
+        </BiLogoDiscord>
       </CardActions>
 
 
