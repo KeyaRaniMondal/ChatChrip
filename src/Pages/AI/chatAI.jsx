@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-// import "./App.css";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 
@@ -30,7 +29,7 @@ const ChatAI=()=> {
     
     try {
       const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${
           import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT
         }`,
         method: "post",
@@ -72,7 +71,7 @@ const ChatAI=()=> {
           {chatHistory.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6">
               <div className="bg-blue-50 rounded-xl p-8 max-w-2xl">
-                <h2 className="text-2xl font-bold text-blue-600 mb-4">Welcome to Chat AI! 👋</h2>
+                <h2 className="text-2xl font-bold text-blue-600 mb-4">Welcome to ChatChrip AI! 👋</h2>
                 <p className="text-gray-600 mb-4">
                   I'm here to help you with anything you'd like to know. You can ask me about:
                 </p>
@@ -104,7 +103,10 @@ const ChatAI=()=> {
                       ? 'bg-blue-500 text-white rounded-br-none'
                       : 'bg-gray-100 text-gray-800 rounded-bl-none'
                   }`}>
-                    <ReactMarkdown className="overflow-auto hide-scrollbar">{chat.content}</ReactMarkdown>
+                    <div className="overflow-auto hide-scrollbar">
+                      <ReactMarkdown>{chat.content}</ReactMarkdown>
+                    </div>
+
                   </div>
                 </div>
               ))}
@@ -138,7 +140,7 @@ const ChatAI=()=> {
             ></textarea>
             <button
               type="submit"
-              className={`px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors ${
+              className={`px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-blue-600 transition-colors ${
                 generatingAnswer ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               disabled={generatingAnswer}
