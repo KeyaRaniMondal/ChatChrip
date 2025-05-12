@@ -114,7 +114,7 @@ const Answer = () => {
                                         }
                                     />
                                     <button
-                                        className="btn btn-success btn-sm self-start"
+                                        className="btn btn-outline btn-sm self-start"
                                         onClick={() => handleSubmitAnswer(q._id)}
                                     >
                                         Submit Answer

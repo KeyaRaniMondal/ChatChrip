@@ -1,7 +1,7 @@
 
 ChatChrip is a social platform that makes it easy for people around the world to connect, share their thoughts, and exchange knowledge. Users can post about their favorite topics, interact through comments, vote on posts, manage profiles, and even participate in a secure payment system. Admins have special privileges, including managing users and promoting members to admin status.
 
-<img class="screenshot" src="https://github.com/user-attachments/assets/25e59fff-6882-4d94-9238-f2eac1cb4a5a" alt="Chatchrip Forum Screenshot">
+![ChatChrip website Screenshot](https://github.com/KeyaRaniMondal/ChatChrip/blob/259ee2f07db94ceb2560f0ee8d55cb1a0d2adac3/Screenshot%20(36).png)
 
 # 🌍 ChatChrip
 
