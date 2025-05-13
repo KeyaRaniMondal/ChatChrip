@@ -102,6 +102,7 @@ const Modal = ({ isModalOpen, toggleModal }) => {
             timer: 1500,
             showConfirmButton: false,
           });
+       
         } else {
           // Registration logic
           try {
@@ -152,7 +153,7 @@ const Modal = ({ isModalOpen, toggleModal }) => {
 
       }
     },
-    
+   
     // onSubmit: async (values) => {
     //   try {
     //     let imageUrl = null;

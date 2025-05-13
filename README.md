@@ -26,12 +26,46 @@ This project is powered by modern web technologies:
 - 🌎 **Global Connection** – Share thoughts and knowledge with everyone.
 - 📝 **Create & Manage Posts** – Users can create, edit, and delete their own posts.
 - 💬 **Comment System** – Engage with posts by commenting.
-- 👍 **Voting System** – Rate posts with an upvote/downvote system.
+- 👍 **Voting System** – Rate posts with Voting and sharing functionality
 - 👤 **User Profiles** – Manage personal information and activity.
-- 💳 **Payment System** – Secure transactions for premium features.
+- 💳 **Payment System** – Secure transactions for premium feature(Stripe integration for premium features).
 - 🏷 **Tag-Based Search** – Find posts using relevant tags.
 - 🛠️ **Admin Controls** – Admins can manage users, posts, and promote members.
 - 🔄 **User-to-Admin Conversion** – Special feature for converting users into admins.
+- Form validation with Formik and React Hook Form
+- Notifications with SweetAlert2
+- Rich UI components with MUI & TailwindCSS
+
+## 🛠 Tech Stack
+
+**Frontend:**
+- React 18
+- Vite
+- React Router DOM
+- React Hook Form & Formik
+- Firebase
+- React Query
+- Tailwind CSS & DaisyUI
+- Material UI (MUI)
+- Stripe API
+- Chart.js via React ChartJS 2
+- Emotion (styled components)
+
+**Utilities:**
+- Axios
+- SweetAlert2
+- React Icons
+- Match Sorter
+- React Markdown
+- React Select
+- LocalForage
+
+**Development Tools:**
+- ESLint
+- PostCSS
+- Autoprefixer
+- TypeScript support via types packages
+
 
 ## 📦 Dependencies Used
 -"dependencies": {
@@ -58,16 +92,17 @@ This project is powered by modern web technologies:
   -  "sweetalert2": "^11.15.10"
 -  },
 
-# A step-by-step guide on how to run the project locally:
-## 📥 Installation
+
+## ⚙️ Setup & Installation
 
 1. Clone the repository:
 
-   git clone [https://github.com/your-username/socialconnect.git](https://github.com/KeyaRaniMondal/ChatChrip.git)]
-   cd ChatChrip
-2. Install dependencies:
-3. Start the development server:
-    npm run dev
+   git clone [\[https://github.com/your-username/socialconnect.git\]](https://github.com/KeyaRaniMondal/ChatChrip.git)
+
+2. Install Dependencies
+  - npm install
+3. Run the Development Server
+  - npm run dev
 
 ## 🌐 Live Demo
 🔗 [Live Project](https://forum-client-c31be.web.app/)
