@@ -53,7 +53,7 @@ const Answer = () => {
     
 
     return (
-        <div className="w-full flex flex-col md:flex-row justify-between items-start mt-24 px-6 md:px-16 gap-10">
+        <div className="py-5 w-full flex flex-col md:flex-row justify-between items-start mt-24 px-6 md:px-16 gap-10">
             <ul className="list bg-base-100 rounded-box shadow-md w-full md:w-2/3">
                 <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
                     List of Questions

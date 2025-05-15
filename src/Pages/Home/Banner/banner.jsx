@@ -15,12 +15,12 @@ import {
 } from "react-icons/fa";
 
 const categoryIcons = {
-  Technology: <FaMicrochip />,
-  Programming: <FaLaptopCode />,
-  Languages: <FaLanguage />,
   Game: <FaGamepad />,
   Business: <FaBriefcase />,
   Animals: <FaHeartbeat />,
+  Technology: <FaMicrochip />,
+  Programming: <FaLaptopCode />,
+  Languages: <FaLanguage />,
   Books: <FaBook />,
   Music: <FaMusic />,
   Clothes: <FaTshirt />,

@@ -35,7 +35,7 @@ const Blogs = () => {
   ];
 
   return (
-    <div className='mt-32'>
+    <div className='pt-32'>
       {blogData.map((blog, index) => (
         <div key={index} className="blog-post">
           <h3 className='font-bold text-xl text-[#c0932a]'>{blog.title}</h3>

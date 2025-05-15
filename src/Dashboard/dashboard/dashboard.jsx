@@ -10,85 +10,98 @@ import { TfiAnnouncement } from "react-icons/tfi";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
+
   return (
-    <div className="mt-20">
-      <Navbar></Navbar>
+    <div className="min-h-screen mt-20">
+      <Navbar />
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
-          <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
-            Open drawer
+        <div className="drawer-content flex flex-col p-4">
+          {/* Drawer toggle button for mobile */}
+          <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden w-fit self-end mb-4">
+            Open Menu
           </label>
-          <Outlet></Outlet>
+          <Outlet />
         </div>
+
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu bg-base-300 text-base-content min-h-full w-80 p-4">
-            {
-              isAdmin ?
-                <>
-                  <li>
-                    <NavLink to="/dashboard/adminHome">
-                      <MdAdminPanelSettings className="text-2xl"/> Admin Profile
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/manageUser">
-                      <FaUsers className="text-2xl"/> Manage Users
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/reportedActivities">
-                    <RxActivityLog className="text-2xl"/> Activities
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/announcement">
-                    <TfiAnnouncement className="text-2xl"/>Make Announcement
-                    </NavLink>
-                  </li>
-                </>
-               :  
-                <>
-                  <li>
-                    <NavLink to="/dashboard/profile">
-                      <FaUserShield className="text-2xl"/> My Profile
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/profileOverview">
-                      <FaUserShield className="text-2xl"/>Profile Overview
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/addPost">
-                      <MdPostAdd className="text-2xl"/> Add Post
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/dashboard/myPost">
-                      <FaUserPen className="text-2xl"/> My Posts
-                    </NavLink>
-                  </li>
-                </>
-           }  
+          <ul className="menu bg-base-300 text-base-content min-h-full w-80 p-4 overflow-y-auto">
+            {isAdmin ? (
+              <>
+                <li>
+                  <NavLink to="/dashboard/adminHome">
+                    <MdAdminPanelSettings className="text-2xl" /> Admin Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/manageUser">
+                    <FaUsers className="text-2xl" /> Manage Users
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/reportedActivities">
+                    <RxActivityLog className="text-2xl" /> Activities
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/announcement">
+                    <TfiAnnouncement className="text-2xl" /> Make Announcement
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <NavLink to="/dashboard/profile">
+                    <FaUserShield className="text-2xl" /> My Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/profileOverview">
+                    <FaUserShield className="text-2xl" /> Profile Overview
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/addPost">
+                    <MdPostAdd className="text-2xl" /> Add Post
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/myPost">
+                    <FaUserPen className="text-2xl" /> My Posts
+                  </NavLink>
+                </li>
+              </>
+            )}
 
-        <li className="mt-32">    <NavLink to="/.">
-        <MdMessage className="text-2xl"/>Messages
-                    </NavLink></li>
-        <li>    <NavLink to="/..">
-        <IoIosCreate className="text-2xl"/>Create Add
-                    </NavLink></li>
-        <li>    <NavLink to="/...">
-        <MdOutlineMonetizationOn className="text-2xl"/>Monetize
-                    </NavLink></li>
-        <li>    <NavLink to="/...">
-        <IoIosBookmark className="text-2xl"/>BookMarks
-                    </NavLink></li>
-        <li>    <NavLink to="/....">
-        <IoIosHelpCircle className="text-2xl"/>Help
-                    </NavLink></li>
-
+            {/* Common navigation */}
+            <div className="divider" />
+            <li>
+              <NavLink to="/messages">
+                <MdMessage className="text-2xl" /> Messages
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/create-ad">
+                <IoIosCreate className="text-2xl" /> Create Ad
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/monetize">
+                <MdOutlineMonetizationOn className="text-2xl" /> Monetize
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/bookmarks">
+                <IoIosBookmark className="text-2xl" /> Bookmarks
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/help">
+                <IoIosHelpCircle className="text-2xl" /> Help
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
