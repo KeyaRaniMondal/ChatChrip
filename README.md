@@ -97,7 +97,7 @@ This project is powered by modern web technologies:
 
 1. Clone the repository:
 
-   git clone [\[https://github.com/your-username/socialconnect.git\]](https://github.com/KeyaRaniMondal/ChatChrip.git)
+   git clone [\[https://github.com/KeyaRaniMondal/ChatChrip.git\]](https://github.com/KeyaRaniMondal/ChatChrip.git)
 
 2. Install Dependencies
   - npm install

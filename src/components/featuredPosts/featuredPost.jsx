@@ -17,7 +17,6 @@ import { FaCommentDots } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoSparkles } from "react-icons/io5";
 import { IoIosShareAlt } from "react-icons/io";
-import LatestPosts from "./latestPost";
 
 const FeaturedCard = ({ search }) => {
   const [posts, setPosts] = useState([]);
@@ -61,19 +60,21 @@ const FeaturedCard = ({ search }) => {
   );
 
   return (
-    <div className="posts-container mt-10 items-center mx-auto w-full max-w-5xl px-4">
-      <div className="lg:-mt-[183px] controls flex justify-end lg:ml-[1000px] px-40 mb-20">
+    <div className="posts-container mt-10 items-center mx-auto w-full max-w-4xl px-4 lg:px-6 lg:-mt-[30%]">
+      <div className="flex justify-end  ">
         <button
           onClick={toggleSortByPopularity}
-          className=" bg-gradient-to-r from-[#726f24] to-blue-500 hover:from-pink-500 hover:to-orange-500  text-white text-xs w-32 lg:px-4 py-2 lg:w-40 lg:text-md rounded-full lg:-ml-[450px] "
+          className="flex items-center gap-2 bg-gradient-to-r from-[#726f24] to-blue-500 hover:from-pink-500 hover:to-orange-500 text-white text-sm px-4 py-2 rounded-full shadow"
         >
-          <IoSparkles className="w-40 " /> {sortByPopularity ? " Sort by Newest" : "Sort by Popularity"}
+          <IoSparkles className="text-lg" />
+          {sortByPopularity ? "Sort by Newest" : "Sort by Popularity"}
         </button>
       </div>
 
       {paginatedPosts.map((post) => (
         <Link key={post._id} to={`/postDetail/${post._id}`}>
-          <Card sx={{ maxWidth: 700 }} className="ml-40 mb-5 ">
+          <Card sx={{ maxWidth: 700 }} className="mb-5 mx-auto">
+
             <CardHeader
 
               avatar={
@@ -118,7 +119,7 @@ const FeaturedCard = ({ search }) => {
               </Typography>
             </CardContent>
 
-            <CardActions disableSpacing className="bg-[#fcf9f9]">
+            <CardActions disableSpacing >
               <IconButton aria-label="upvote">
                 <BiSolidUpvote className="text-[#257425]" />
               </IconButton>
@@ -136,6 +137,7 @@ const FeaturedCard = ({ search }) => {
           </Card>
         </Link>
       ))}
+
 
       {/* Pagination */}
       <div className="pagination flex justify-center mt-5">
