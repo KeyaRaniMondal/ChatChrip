@@ -16,16 +16,17 @@ const LatestPosts = () => {
 
     const updateVisibleCount = () => {
         const width = window.innerWidth;
-        if (width >= 1024) return 5; // lg
-        else if (width >= 768) return 3; // md
-        else return 1; // sm
+        if (width >= 1280) return 5;        // xl
+        else if (width >= 1024) return 3;   // lg
+        else if (width >= 768) return 2;    // md
+        else return 1;                      // sm
     };
 
     useEffect(() => {
         const handleResize = () => {
             const count = updateVisibleCount();
             setVisibleCount(count);
-            setCurrentIndex(0); // reset index on resize
+            setCurrentIndex(0);
         };
         handleResize();
         window.addEventListener("resize", handleResize);
@@ -36,54 +37,57 @@ const LatestPosts = () => {
     const nextSlide = () => setCurrentIndex((i) => Math.min(i + 1, maxIndex));
     const prevSlide = () => setCurrentIndex((i) => Math.max(i - 1, 0));
 
-    const showArrows = visibleCount < 5;
-
     return (
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full py-6 px-2 sm:px-6 overflow-hidden">
             {latest.length > 0 ? (
-                <div className="flex items-center justify-center relative">
-                    {showArrows && currentIndex > 0 && (
+                <div className="relative flex items-center w-full">
+                    {/* Left Arrow */}
+                    {currentIndex > 0 && (
                         <button
                             onClick={prevSlide}
-                            className="absolute left-0 z-10 p-2 mx-2 text-white bg-black rounded-full opacity-70 hover:opacity-100"
+                            className="absolute z-10 left-0 bg-black/60 hover:bg-black text-white p-2 rounded-full"
                         >
                             <FaChevronLeft />
                         </button>
                     )}
 
-                    <div className="w-full overflow-hidden px-4">
+                    {/* Slider */}
+                    <div className="w-full overflow-hidden">
                         <div
-                            className="flex gap-4 transition-transform duration-500"
+                            className="flex transition-transform duration-500 ease-in-out"
                             style={{
-                                transform: `translateX(-${(100 / visibleCount) * currentIndex}%)`,
                                 width: `${(100 / visibleCount) * latest.length}%`,
+                                transform: `translateX(-${(100 / latest.length) * currentIndex}%)`,
                             }}
                         >
                             {latest.map((post) => (
                                 <Link
                                     key={post._id}
                                     to={`/postDetail/${post._id}`}
-                                    style={{ width: `${100 / latest.length}%`, flexShrink: 0 }}
+                                    className="flex-shrink-0"
+                                    style={{
+                                        width: `${100 / latest.length}%`,
+                                        padding: '0 8px',
+                                    }}
                                 >
                                     <div
-                                        className="h-[200px] card bg-base-100 shadow-sm list-none"
+                                        className="h-52 bg-gray-200 rounded-md shadow"
                                         style={{
-                                            backgroundImage: `url(${post.image})`,
+                                            backgroundImage: `url(${post.image || "/placeholder.jpg"})`,
                                             backgroundSize: "cover",
                                             backgroundPosition: "center",
                                         }}
-                                    >
-                                        <div className="card-body"></div>
-                                    </div>
+                                    ></div>
                                 </Link>
                             ))}
                         </div>
                     </div>
 
-                    {showArrows && currentIndex < maxIndex && (
+                    {/* Right Arrow */}
+                    {currentIndex < maxIndex && (
                         <button
                             onClick={nextSlide}
-                            className="absolute right-0 z-10 p-2 mx-2 text-white bg-black rounded-full opacity-70 hover:opacity-100"
+                            className="absolute z-10 right-0 bg-black/60 hover:bg-black text-white p-2 rounded-full"
                         >
                             <FaChevronRight />
                         </button>
