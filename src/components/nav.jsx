@@ -48,30 +48,37 @@ const Navbar = () => {
 
   const links = (
     <>
-      <NavLink to={"/"} className="btn btn-ghost">
-        <FaHome className="text-xl" /><span className="-ml-9 mt-8">Home</span>
+      <NavLink to={"/"} className="btn btn-ghost flex flex-col items-center lg:flex-row lg:gap-2">
+        <FaHome className="text-xl" />
+        <span className="text-sm lg:mt-0">Home</span>
       </NavLink>
-      <NavLink to={"/membership"} className="btn btn-ghost">
+
+      <NavLink to={"/membership"} className="btn btn-ghost flex flex-col items-center lg:flex-row lg:gap-2">
         <MdCardMembership className="text-xl" />
-        <span className="-ml-12 mt-8">Membership</span>
+        <span className="text-sm lg:mt-0">Membership</span>
       </NavLink>
-      <NavLink to={"/question"} className="btn btn-ghost">
+
+      <NavLink to={"/question"} className="btn btn-ghost flex flex-col items-center lg:flex-row lg:gap-2">
         <FaFileCircleQuestion className="text-xl" />
-        <span className="-ml-12 mt-8">Ask Questions</span>
+        <span className="text-sm lg:mt-0">Ask Questions</span>
       </NavLink>
-      <NavLink to={"/blogs"} className="btn btn-ghost">
+
+      <NavLink to={"/blogs"} className="btn btn-ghost flex flex-col items-center lg:flex-row lg:gap-2">
         <TbLogs className="text-xl" />
-        <span className="-ml-9 mt-8">Blogs</span>
+        <span className="text-sm lg:mt-0">Blogs</span>
       </NavLink>
-      <NavLink to={"/answer"} className="btn btn-ghost">
+
+      <NavLink to={"/answer"} className="btn btn-ghost flex flex-col items-center lg:flex-row lg:gap-2">
         <SiAnswer className="text-xl" />
-        <span className="-ml-12 mt-8">Answer Questions</span>
+        <span className="text-sm lg:mt-0">Answer Questions</span>
       </NavLink>
-      <NavLink to={"/chatAi"} className="btn btn-ghost">
+
+      <NavLink to={"/chatAi"} className="btn btn-ghost flex flex-col items-center lg:flex-row lg:gap-2">
         <LuBrainCircuit className="text-xl font-bold" />
-        <span className="-ml-12 mt-8 font-bold">ChatChripAI</span>
+        <span className="text-sm lg:mt-0 font-bold">ChatChripAI</span>
       </NavLink>
     </>
+
   );
 
   return (

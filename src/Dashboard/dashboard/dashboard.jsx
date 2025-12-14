@@ -12,11 +12,11 @@ const Dashboard = () => {
   const [isAdmin] = useAdmin();
 
   return (
-    <div className="min-h-screen mt-20">
+    <div className="min-h-screen mt-20 ">
       <Navbar />
-      <div className="drawer lg:drawer-open">
+      <div className="drawer lg:drawer-open ">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col p-4">
+        <div className="drawer-content flex flex-col p-4 ">
           {/* Drawer toggle button for mobile */}
           <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden w-fit self-end mb-4">
             Open Menu
@@ -24,9 +24,10 @@ const Dashboard = () => {
           <Outlet />
         </div>
 
-        <div className="drawer-side">
+        <div className="drawer-side mt-14 lg:mt-0">
+
           <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu bg-base-300 text-base-content min-h-full w-80 p-4 overflow-y-auto">
+          <ul className="menu bg-base-300 text-base-content min-h-full w-80 p-4 overflow-y-auto ">
             {isAdmin ? (
               <>
                 <li>
